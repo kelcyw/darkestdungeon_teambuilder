@@ -43,3 +43,17 @@ tell me the team's strengths and weaknesses, and also
 tell me where and what I should be fighting with this team would be 
 really helpful, not just for me but maybe for people
 who are newer to the game as well!
+
+## User Stories
+
+- add and remove characters to my team
+- select and deselect skills from characters
+- add trinkets to characters
+- name and save my team setup
+- store a list of my team setups
+  - get a setup from this list to view 
+    and/or edit it
+- see which stats the team is strong and weak in
+- see which areas and bosses the team is strong
+and weak against
+- see what positions the team will be able to hit
