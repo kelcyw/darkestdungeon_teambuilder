@@ -8,8 +8,6 @@ user will be able to:
 - save and name their team setups
 - add and remove characters from a team
 - select skills for characters
-- add trinkets (*items that adjust 
-certain stats*) if they want to.
 
 Once a team is created, the user should 
 also be able to see:
@@ -21,14 +19,6 @@ also be able to see:
 strong and/or weak against
 - the positions of the enemy team that the
 player's team can hit
-
-Some stretch goals (i.e. things I could add 
-after the course or if I have the time) would be:
-- the ability to select any quirks (*"traits" that 
-adjust stats or add new qualities to characters*)
-that the characters have
-- the ability to share team setups with other people
-- the ability to add custom/modded characters
 
 ## Why is this project of interest to you? Who will use it?
 
@@ -48,7 +38,6 @@ who are newer to the game as well!
 
 - add and remove characters to my team
 - select and deselect skills from characters
-- add trinkets to characters
 - name and save my team setup
 - store a list of my team setups
   - get a setup from this list to view 
