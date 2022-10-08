@@ -12,13 +12,9 @@ user will be able to:
 Once a team is created, the user should 
 also be able to see:
 - the team's strongest qualities 
-(*ex. lots of stuns*)
-- the team's weaker qualities 
-(*ex. no healing, no stuns*)
-- the areas and bosses that the team will be 
+(*ex. lots of blight*)
+- the bosses that the team will be 
 strong and/or weak against
-- the positions of the enemy team that the
-player's team can hit
 
 ## Why is this project of interest to you? Who will use it?
 
@@ -30,7 +26,7 @@ use as well as tips and tricks, and team setups are a pretty
 heavily-discussed topic within the game's community as 
 well. A tool that could help me put characters together in a team, 
 tell me the team's strengths and weaknesses, and also 
-tell me where and what I should be fighting with this team would be 
+tell me what I should be fighting with this team would be 
 really helpful, not just for me but maybe for people
 who are newer to the game as well!
 
@@ -38,11 +34,9 @@ who are newer to the game as well!
 
 - add and remove characters to my team
 - select and deselect skills from characters
-- name and save my team setup
-- store a list of my team setups
-  - get a setup from this list to view 
+- name and save my team
+- store a list of my teams
+  - get a team from this list to view 
     and/or edit it
-- see which stats the team is strong and weak in
-- see which areas and bosses the team is strong
-and weak against
-- see what positions the team will be able to hit
+- see which stats the team is strong in
+- see which bosses the team is strong against
