@@ -31,7 +31,7 @@ public class SkillTest {
         testSkill.addSkillStat(testStat);
         ArrayList<Stat> resultStatList = new ArrayList<>();
         resultStatList.add(testStat);
-        assertEquals(resultStatList, testSkill.getListOfStats());
+        assertEquals(resultStatList, testSkill.getSkillStats());
     }
 
     @Test
@@ -43,7 +43,7 @@ public class SkillTest {
         resultStatList.add(testStat2);
         testSkill.removeSkillStat(testStat);
         resultStatList.remove(testStat);
-        assertEquals(resultStatList, testSkill.getListOfStats());
+        assertEquals(resultStatList, testSkill.getSkillStats());
     }
 
 }

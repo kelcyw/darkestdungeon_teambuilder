@@ -1,49 +1,51 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Skill {
     private String skillDescription;
-    private ArrayList<Stat> listOfStats;
+    private List<Stat> skillStats;
     private boolean selected;
 
     // EFFECTS: constructs a new skill
     public Skill(String skillDescription) {
-        // stub
+        this.skillDescription = skillDescription;
+        skillStats = new ArrayList<>();
+        selected = false;
     }
 
     // EFFECTS: returns skill description
     public String getSkillDescription() {
-        return "sample description";
+        return skillDescription;
     }
 
     // EFFECTS: returns a list of skill stats
-    public ArrayList<Stat> getListOfStats() {
-        ArrayList<Stat> stubListOfStats = new ArrayList<Stat>();
-        return stubListOfStats;  // stub
+    public List<Stat> getSkillStats() {
+        return skillStats;
     }
 
     // EFFECTS: returns the skill's selected status
     public boolean isSelected() {
-        return false;  // stub
+        return selected;  // stub
     }
 
     // MODIFIES: this
     // EFFECTS: selects the skill if it is deselected, and vice versa
     public void changeSelectedStatus() {
-        // stub
+        selected = !selected;
     }
 
     // MODIFIES: this
     // EFFECTS: adds a stat to a skill
     public void addSkillStat(Stat newStat) {
-        // stub
+        skillStats.add(newStat);
     }
 
     // MODIFIES: this
-    // EFFECTS: adds a stat to a skill
+    // EFFECTS: removes a stat from a skill
     public void removeSkillStat(Stat currentStat) {
-        // stub
+        skillStats.remove(currentStat);
     }
 
 }
