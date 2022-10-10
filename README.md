@@ -11,10 +11,8 @@ user will be able to:
 
 Once a team is created, the user should 
 also be able to see:
-- the team's strongest qualities 
-(*ex. lots of blight*)
-- the bosses that the team will be 
-strong and/or weak against
+- the team's strongest stats
+
 
 ## Why is this project of interest to you? Who will use it?
 
@@ -24,11 +22,10 @@ and bosses within the game. I tend to spend a lot of time searching
 online for compositions that other people like to 
 use as well as tips and tricks, and team setups are a pretty 
 heavily-discussed topic within the game's community as 
-well. A tool that could help me put characters together in a team, 
-tell me the team's strengths and weaknesses, and also 
-tell me what I should be fighting with this team would be 
-really helpful, not just for me but maybe for people
-who are newer to the game as well!
+well. A tool that could help me put characters together in a team and
+tell me the team's strengths will help me with determining what and where
+I should be fighting with that team, which could be very helpful not just for me
+but for players who are newer to the game as well!
 
 ## User Stories
 
@@ -39,4 +36,3 @@ who are newer to the game as well!
   - get a team from this list to view 
     and/or edit it
 - see which stats the team is strong in
-- see which bosses the team is strong against

@@ -48,4 +48,23 @@ public class HeroTypeTest {
         resultingList.remove(testSkill2);
         assertEquals(resultingList, testHeroType.getHeroSkills());
     }
+
+    @Test
+    public void testGetHeroSelectedSkills() {
+        testSkill1.changeSelectedStatus();
+        List<Skill> selectedSkills = new ArrayList<>();
+        selectedSkills.add(testSkill1);
+        assertEquals(selectedSkills, testHeroType.getHeroSelectedSkills());
+    }
+
+    @Test
+    public void testGetHeroSelectedSkillsMultiple() {
+        testSkill1.changeSelectedStatus();
+        testSkill2.changeSelectedStatus();
+        List<Skill> selectedSkills = new ArrayList<>();
+        selectedSkills.add(testSkill1);
+        selectedSkills.add(testSkill2);
+        assertEquals(selectedSkills, testHeroType.getHeroSelectedSkills());
+    }
+
 }

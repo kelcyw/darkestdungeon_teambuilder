@@ -22,6 +22,17 @@ public class HeroType {
         return allHeroSkills;
     }
 
+    // EFFECTS: returns the hero's SELECTED skills
+    public List<Skill> getHeroSelectedSkills() {
+        List<Skill> heroSelectedSkills = new ArrayList<>();
+        for (Skill skill: allHeroSkills) {
+            if (skill.isSelected()) {
+                heroSelectedSkills.add(skill);
+            }
+        }
+        return heroSelectedSkills;
+    }
+
     // MODIFIES: this
     // EFFECTS: changes hero's type name
     public void changeHeroTypeName(String newTypeName) {
