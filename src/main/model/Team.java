@@ -26,6 +26,12 @@ public class Team {
         return teamMembers.get(index);
     }
 
+    // EFFECTS: gets all heroes contained in team
+    // TODO: create a test for this?
+    public List<Hero> getTeamMembers() {
+        return teamMembers;
+    }
+
     // MODIFIES: this
     // EFFECTS: changes team name to given string
     public void changeTeamName(String newName) {
