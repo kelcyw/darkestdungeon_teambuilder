@@ -95,7 +95,7 @@ public class Team {
             }
         }
         if (commonStats.equals("")) {
-            return "none";
+            return " none";
         } else {
             return commonStats;
         }

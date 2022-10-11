@@ -57,7 +57,7 @@ public class TeamTest {
         testStat.increaseStatChance();
         testSkill.addSkillStat(testStat);
         testSkill.changeSelectedStatus();
-        assertEquals("none", testTeam.determineStrengths());
+        assertEquals(" none", testTeam.determineStrengths());
     }
 
 
