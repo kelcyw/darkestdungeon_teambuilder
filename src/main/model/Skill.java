@@ -36,6 +36,7 @@ public class Skill {
         selected = !selected;
     }
 
+    // REQUIRES: stat is not already part of the skill
     // MODIFIES: this
     // EFFECTS: adds a stat to a skill
     public void addSkillStat(Stat newStat) {

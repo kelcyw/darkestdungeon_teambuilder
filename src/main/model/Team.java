@@ -7,12 +7,14 @@ import java.util.List;
 public class Team {
     private String teamName;
     private List<Hero> teamMembers;
+    private boolean favourite;
     private static final int COMMON_THRESHOLD = 3;
 
     // EFFECTS: makes a new team
     public Team(String teamName) {
         this.teamName = teamName;
         teamMembers = new ArrayList<>();
+        favourite = false;
     }
 
     // EFFECTS: returns team name
@@ -27,9 +29,19 @@ public class Team {
     }
 
     // EFFECTS: gets all heroes contained in team
-    // TODO: create a test for this?
     public List<Hero> getTeamMembers() {
         return teamMembers;
+    }
+
+    // EFFECTS: gets the team's favourite status
+    public boolean isFavourite() {
+        return favourite;
+    }
+
+    // EFFECTS: changes the team's favourite status
+    public boolean changeFavourite() {
+        favourite = !favourite;
+        return favourite;
     }
 
     // MODIFIES: this

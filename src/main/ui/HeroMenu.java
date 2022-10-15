@@ -1,11 +1,9 @@
 package ui;
 
 import model.Hero;
-import model.HeroType;
 import model.Skill;
 import model.Team;
 
-import java.util.List;
 import java.util.Scanner;
 
 public class HeroMenu {
@@ -66,6 +64,7 @@ public class HeroMenu {
         String heroNewName = input.next();
         hero.changeHeroGivenName(heroNewName);
         System.out.println("The hero's name is now " + heroNewName + "!");
+        editHero(team, hero);
     }
 
     // MODIFIES: this
@@ -73,6 +72,7 @@ public class HeroMenu {
     private void optionLevelUpHero(Hero hero) {
         hero.increaseHeroLevel();
         System.out.println("The hero's level is now " + hero.getHeroLevel() + "!");
+        editHero(team, hero);
     }
 
     // MODIFIES: this
@@ -80,6 +80,7 @@ public class HeroMenu {
     private void optionLevelDownHero(Hero hero) {
         hero.decreaseHeroLevel();
         System.out.println("The hero's level is now " + hero.getHeroLevel() + "!");
+        editHero(team, hero);
     }
 
     // MODIFIES: hero
@@ -111,6 +112,7 @@ public class HeroMenu {
                 s.changeSelectedStatus();
                 System.out.println("The skill " + skillDesc
                         + "selected status is: " + s.isSelected());
+                editHero(team, hero);
                 break;
             } else {
                 System.out.println("The hero does not have a skill with the description "

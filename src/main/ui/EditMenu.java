@@ -4,9 +4,9 @@ import model.Hero;
 import model.HeroType;
 import model.Team;
 import model.TeamList;
-import org.w3c.dom.ls.LSOutput;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class EditMenu {
@@ -32,14 +32,18 @@ public class EditMenu {
     private void editTeam(String teamName, TeamList savedTeams, List<HeroType> availableHeroTypes) {
         String command = null;
         for (Team team : savedTeams.getSavedTeams()) {
-            if (team.getTeamName().equals(teamName)) {
+            String actualTeamNameUpperCase = team.getTeamName().toUpperCase();
+            String givenTeamNameUpperCase = teamName.toUpperCase();
+            if (actualTeamNameUpperCase.equals(givenTeamNameUpperCase)) {
                 printHeroNamesAndTypes(team);
                 displayEditMenu();
                 command = input.next();
                 command = command.toUpperCase();
-                processEditMenuCommand(command, team, availableHeroTypes);
+                processEditMenuCommand(command, team, savedTeams, availableHeroTypes);
+                break;
             }
         }
+        System.out.println("There is no team with that name!");
     }
 
     // EFFECTS: shows options for editing the given team
@@ -50,23 +54,27 @@ public class EditMenu {
         System.out.println("- Edit a hero (EDITHERO)");
         System.out.println("- Determine the team's strengths (ANALYZE)");
         System.out.println("- Change the team's name (RENAME)");
+        System.out.println("- Favourite or unfavourite this team (FAV)");
         System.out.println("- Return to the main menu (RETURN)");
     }
 
     // MODIFIES: this
     // EFFECTS: processes the user command for edit menu
-    private void processEditMenuCommand(String command, Team team, List<HeroType> availableHeroTypes) {
+    private void processEditMenuCommand(String command, Team team,
+                                        TeamList savedTeams, List<HeroType> availableHeroTypes) {
         if (command.equals("ADD")) {
-            optionAddHero(team, availableHeroTypes);
+            optionAddHero(team, savedTeams, availableHeroTypes);
         } else if (command.equals("REMOVE")) {
-            optionRemoveHero(team, "");
+            optionRemoveHero(team, savedTeams, availableHeroTypes, "");
         } else if (command.equals("EDITHERO")) {
-            optionChangeHero(team);
+            optionChangeHero(team, savedTeams, availableHeroTypes);
         } else if (command.equals("ANALYZE")) {
-            optionAnalyzeTeam(team);
+            optionAnalyzeTeam(team, savedTeams, availableHeroTypes);
         } else if (command.equals("RENAME")) {
-            optionRenameTeam(team);
-        }  else if (command.equals("RETURN")) {
+            optionRenameTeam(team, savedTeams, availableHeroTypes);
+        }  else if (command.equals("FAV")) {
+            optionFavTeam(team, savedTeams, availableHeroTypes);
+        } else if (command.equals("RETURN")) {
             System.out.println("\nReturning to main menu ...");
         } else {
             System.out.println("\nNot a valid command!");
@@ -75,7 +83,7 @@ public class EditMenu {
 
     // MODIFIES: this
     // EFFECTS: adds a hero to the given team
-    public void optionAddHero(Team team, List<HeroType> availableHeroTypes) {
+    public void optionAddHero(Team team, TeamList savedTeams, List<HeroType> availableHeroTypes) {
         HeroType inputHeroType = new HeroType("Placeholder", null);
         String inputHeroTypeName = "";
         String inputHeroName = "";
@@ -92,6 +100,7 @@ public class EditMenu {
         } else {
             team.addHeroToTeam(new Hero(inputHeroName, inputHeroType));
             System.out.println("New hero added! Name: " + inputHeroName + ", Type: " + inputHeroTypeName);
+            editTeam(team.getTeamName(), savedTeams, availableHeroTypes);
         }
 
     }
@@ -108,11 +117,12 @@ public class EditMenu {
 
     // EFFECTS: removes a hero with the given name from the team
     //          if a hero w/ that name can't be found, do nothing
-    public void removeHero(Team team, String heroName) {
+    public void removeHero(Team team, TeamList savedTeams, List<HeroType> availableHeroTypes, String heroName) {
         for (Hero h : team.getTeamMembers()) {
             if (heroName.equals(h.getHeroGivenName())) {
                 team.removeHeroFromTeam(h);
                 System.out.println("Successfully removed " + heroName + " from the team!");
+                editTeam(teamName, savedTeams, availableHeroTypes);
                 break;
             }
             System.out.println("There is no hero with that given name!");
@@ -121,34 +131,37 @@ public class EditMenu {
 
     // MODIFIES: this
     // EFFECTS: removes a hero from the given team
-    public void optionRemoveHero(Team team, String heroName) {
+    public void optionRemoveHero(Team team, TeamList savedTeams, List<HeroType> availableHeroTypes, String heroName) {
         System.out.println("Enter the name of the hero you would like to remove: ");
         heroName = input.next();
-        removeHero(team, heroName);
+        removeHero(team, savedTeams, availableHeroTypes, heroName);
     }
 
     // MODIFIES: this
     // EFFECTS: determines team's strengths
-    public void optionAnalyzeTeam(Team team) {
+    public void optionAnalyzeTeam(Team team, TeamList savedTeams, List<HeroType> availableHeroTypes) {
         System.out.println("This team has: " + team.determineStrengths());
+        editTeam(team.getTeamName(), savedTeams, availableHeroTypes);
     }
 
     // MODIFIES: this
     // EFFECTS: selects and/or deselects skills for heroes on the team
-    public void optionChangeHero(Team team) {
+    public void optionChangeHero(Team team, TeamList savedTeams, List<HeroType> availableHeroTypes) {
         printHeroNamesAndTypes(team);
         System.out.println("Please enter the name of the hero that you would like to edit: ");
         String heroName = input.next();
-        changeHero(team, heroName);
+        changeHero(team, heroName, savedTeams, availableHeroTypes);
     }
 
     // MODIFIES: this
     // EFFECTS: calls the hero editing menu if the given hero exists
     //          if not, does nothing
-    private void changeHero(Team team, String heroName) {
+    private void changeHero(Team team, String heroName,
+                            TeamList savedTeams, List<HeroType> availableHeroesTypes) {
         for (Hero h : team.getTeamMembers()) {
             if (heroName.equals(h.getHeroGivenName())) {
                 new HeroMenu(team, h);
+                editTeam(team.getTeamName(), savedTeams, availableHeroesTypes);
                 break;
             }
             System.out.println("There is no hero with that given name!");
@@ -157,15 +170,17 @@ public class EditMenu {
 
     // MODIFIES: this
     // EFFECTS: renames team
-    public void optionRenameTeam(Team team) {
+    public void optionRenameTeam(Team team, TeamList savedTeams, List<HeroType> availableHeroTypes) {
         System.out.println("Enter the new team name: ");
         String newTeamName = input.next();
         team.changeTeamName(newTeamName);
+        System.out.println("The team's name is now: " + newTeamName + "!");
+        editTeam(team.getTeamName(), savedTeams, availableHeroTypes);
     }
 
     // EFFECTS: prints given names and types of heroes in a team
     private void printHeroNamesAndTypes(Team team) {
-        System.out.println("\nThe team '" + teamName + "' has the heroes: ");
+        System.out.println("\nThe team '" + team.getTeamName() + "' has the heroes: ");
         String allHeroNamesAndTypes = " ";
         for (Hero h : team.getTeamMembers()) {
             allHeroNamesAndTypes =
@@ -185,5 +200,12 @@ public class EditMenu {
             allHeroTypes = allHeroTypes.concat(ht.getHeroTypeName() + " ; ");
         }
         System.out.println(allHeroTypes);
+    }
+
+    // EFFECTS: changes the team's favourite status
+    private void optionFavTeam(Team team, TeamList savedTeams, List<HeroType> availableHeroTypes) {
+        team.changeFavourite();
+        System.out.println("The team's favourite status is now: " + team.isFavourite() + "!");
+        editTeam(team.getTeamName(), savedTeams, availableHeroTypes);
     }
 }

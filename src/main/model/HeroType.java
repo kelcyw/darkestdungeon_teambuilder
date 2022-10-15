@@ -39,7 +39,7 @@ public class HeroType {
         heroTypeName = newTypeName;
     }
 
-    // REQUIRES: size of allHeroSkills < 7
+    // REQUIRES: size of allHeroSkills < 5, skill is not already in skill list
     // MODIFIES: this
     // EFFECTS: adds a skill to the hero's skill list
     public void addHeroSkill(Skill newSkill) {

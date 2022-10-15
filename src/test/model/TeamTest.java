@@ -34,6 +34,13 @@ public class TeamTest {
     }
 
     @Test
+    public void testChangeFavourite() {
+        boolean previous = testTeam.isFavourite();
+        testTeam.changeFavourite();
+        assertEquals(testTeam.isFavourite(), !previous);
+    }
+
+    @Test
     public void testAddHeroToTeam() {
         testTeam.addHeroToTeam(testHero);
         assertEquals(testHero, testTeam.getHero(0));

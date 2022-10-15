@@ -8,7 +8,7 @@ public class TeamList {
 
     // EFFECTS: makes a new team list
     public TeamList() {
-        savedTeams = new ArrayList<Team>();
+        savedTeams = new ArrayList<>();
     }
 
     // MODIFIES: this
@@ -32,6 +32,17 @@ public class TeamList {
     // EFFECTS: returns all saved teams
     public List<Team> getSavedTeams() {
         return savedTeams;
+    }
+
+    // EFFECTS: returns all favourite teams
+    public List<Team> getFavouriteTeams() {
+        List<Team> favouriteTeams = new ArrayList<>();
+        for (Team t : savedTeams) {
+            if (t.isFavourite()) {
+                favouriteTeams.add(t);
+            }
+        }
+        return favouriteTeams;
     }
 
 }

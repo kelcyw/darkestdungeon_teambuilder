@@ -61,11 +61,6 @@ public class TeamMakerApp {
         System.out.println("- Exit the team maker (EXIT)");
     }
 
-    // EFFECTS: returns savedTeams
-    public TeamList getCurrentSavedTeams() {
-        return savedTeams;
-    }
-
     // MODIFIES: this
     // EFFECTS: initializes all hero types
     private void initializeHeroTypes() {
@@ -191,11 +186,15 @@ public class TeamMakerApp {
         }
     }
 
-    // EFFECTS: prints out all currently saved teams
+    // EFFECTS: prints out all currently saved teams, adding a * to those that are favourited
     private void printSavedTeams() {
         String teamList = " ";
         for (Team team : savedTeams.getSavedTeams()) {
-            teamList = teamList.concat(team.getTeamName() + " ");
+            if (team.isFavourite()) {
+                teamList = teamList.concat(team.getTeamName() + "* ");
+            } else {
+                teamList = teamList.concat(team.getTeamName() + " ");
+            }
         }
         System.out.println("\n" + teamList);
     }
@@ -229,7 +228,6 @@ public class TeamMakerApp {
 
     // MODIFIES: this
     // EFFECTS: finds the first team w/ given name and removes it from the list
-    // TODO: maybe prevent it from breaking w/ team names that have spaces
     private void deleteTeam(String teamName) {
         for (Team team : savedTeams.getSavedTeams()) {
             if (team.getTeamName().equals(teamName)) {

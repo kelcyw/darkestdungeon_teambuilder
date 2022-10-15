@@ -4,8 +4,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SkillTest {
     Skill testSkill;
@@ -29,21 +30,22 @@ public class SkillTest {
     @Test
     public void testAddSkillStat() {
         testSkill.addSkillStat(testStat);
-        ArrayList<Stat> resultStatList = new ArrayList<>();
-        resultStatList.add(testStat);
-        assertEquals(resultStatList, testSkill.getSkillStats());
+        List<Stat> statList = testSkill.getSkillStats();
+
+        assertTrue(statList.contains(testStat));
+        assertEquals(1, statList.size());
     }
 
     @Test
     public void testRemoveSkillStat() {
         testSkill.addSkillStat(testStat);
         testSkill.addSkillStat(testStat2);
-        ArrayList<Stat> resultStatList = new ArrayList<>();
-        resultStatList.add(testStat);
-        resultStatList.add(testStat2);
         testSkill.removeSkillStat(testStat);
-        resultStatList.remove(testStat);
-        assertEquals(resultStatList, testSkill.getSkillStats());
+        List<Stat> statList = testSkill.getSkillStats();
+
+        assertTrue(statList.contains(testStat2));
+        assertFalse(statList.contains(testStat));
+        assertEquals(1, statList.size());
     }
 
 }
