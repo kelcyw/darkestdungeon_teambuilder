@@ -21,10 +21,23 @@ public class SkillTest {
     }
 
     @Test
-    public void testChangeSelectedStatus() {
+    public void testGetSkillDesc() {
+        assertEquals("Skill", testSkill.getSkillDescription());
+    }
+
+    @Test
+    public void testChangeSelectedStatusFalseToTrue() {
         boolean previousStatus = testSkill.isSelected();
         testSkill.changeSelectedStatus();
         assertEquals(testSkill.isSelected(), !previousStatus);
+    }
+
+    @Test
+    public void testChangeSelectedStatusTrueToFalse() {
+        boolean previousStatus = testSkill.isSelected();
+        testSkill.changeSelectedStatus();
+        testSkill.changeSelectedStatus();
+        assertEquals(testSkill.isSelected(), previousStatus);
     }
 
     @Test

@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class TeamTest {
     Team testTeam;
     Hero testHero;
+    Hero testHero2;
     Skill testSkill;
     Stat testStat;
     List<Skill> testSkillset;
@@ -25,6 +26,7 @@ public class TeamTest {
         testStat = new Stat("Stat", 100);
         testHeroType = new HeroType("Test Hero Type", testSkillset);
         testHero = new Hero("Boudica", testHeroType);
+        testHero2 = new Hero("Barristan", testHeroType);
     }
 
     @Test
@@ -34,16 +36,34 @@ public class TeamTest {
     }
 
     @Test
-    public void testChangeFavourite() {
+    public void testChangeFavouriteFalseToTrue() {
         boolean previous = testTeam.isFavourite();
         testTeam.changeFavourite();
         assertEquals(testTeam.isFavourite(), !previous);
     }
 
     @Test
+    public void testChangeFavouriteTrueToFalse() {
+        boolean previous = testTeam.isFavourite();
+        testTeam.changeFavourite();
+        testTeam.changeFavourite();
+        assertEquals(testTeam.isFavourite(), previous);
+    }
+
+    @Test
     public void testAddHeroToTeam() {
         testTeam.addHeroToTeam(testHero);
         assertEquals(testHero, testTeam.getHero(0));
+        assertEquals(1, testTeam.getTeamMembers().size());
+    }
+
+    @Test
+    public void testRemoveHeroFromTeam() {
+        testTeam.addHeroToTeam(testHero);
+        testTeam.addHeroToTeam(testHero2);
+        testTeam.removeHeroFromTeam(testHero);
+        assertEquals(testHero2, testTeam.getHero(0));
+        assertEquals(1, testTeam.getTeamMembers().size());
     }
 
     @Test
