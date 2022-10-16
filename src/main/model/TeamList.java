@@ -3,6 +3,8 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+// TeamList is a list of all the teams a user has created and saved
+
 public class TeamList {
     private List<Team> savedTeams;
 

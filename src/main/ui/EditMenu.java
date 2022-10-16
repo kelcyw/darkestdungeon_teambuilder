@@ -6,8 +6,9 @@ import model.Team;
 import model.TeamList;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Scanner;
+
+// EditMenu contains information and functionality for the edit menu
 
 public class EditMenu {
     Scanner input;

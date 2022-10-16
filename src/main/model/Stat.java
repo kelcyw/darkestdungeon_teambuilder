@@ -1,5 +1,7 @@
 package model;
 
+// Stat is an effect that a skill inflicts on others
+
 public class Stat {
     private String statName;
     private int statChance;

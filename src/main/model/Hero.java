@@ -1,5 +1,7 @@
 package model;
 
+// Hero represents a character that can be added to a team
+
 public class Hero {
 
     private String givenName;

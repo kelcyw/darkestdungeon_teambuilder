@@ -6,6 +6,8 @@ import model.Team;
 
 import java.util.Scanner;
 
+// HeroMenu contains information and functionality for the hero edit menu
+
 public class HeroMenu {
     Scanner input;
     Team team;
@@ -107,18 +109,19 @@ public class HeroMenu {
     // EFFECTS: changes the selected status of the given skill
     //          if the hero does not have that skill, do nothing
     private void changeSelectionStatus(String skillDesc) {
+        String givenSkillDescUpperCase = skillDesc.toUpperCase();
         for (Skill s : hero.getHeroType().getHeroSkills()) {
-            if (skillDesc.equals(s.getSkillDescription())) {
+            String actualSkillDescUpperCase = s.getSkillDescription().toUpperCase();
+            if (givenSkillDescUpperCase.equals(actualSkillDescUpperCase)) {
                 s.changeSelectedStatus();
                 System.out.println("The skill " + skillDesc
-                        + "selected status is: " + s.isSelected());
+                        + "'s selected status is: " + s.isSelected());
                 editHero(team, hero);
                 break;
-            } else {
-                System.out.println("The hero does not have a skill with the description "
-                        + skillDesc + "!");
             }
         }
+        System.out.println("The hero does not have a skill with the description "
+                + skillDesc + "!");
     }
 
 }

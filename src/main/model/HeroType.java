@@ -3,6 +3,9 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+// HeroType represents a hero's classification
+// It determines their classification name and skillset
+
 public class HeroType {
     private String heroTypeName;
     private List<Skill> allHeroSkills;

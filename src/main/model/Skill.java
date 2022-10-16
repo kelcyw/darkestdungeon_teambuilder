@@ -3,6 +3,8 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+// Skill is an ability that a hero has, with associated stats it inflicts on others
+
 public class Skill {
     private String skillDescription;
     private List<Stat> skillStats;

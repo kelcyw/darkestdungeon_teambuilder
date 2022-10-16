@@ -10,8 +10,9 @@ user will be able to:
 - select skills for characters
 
 Once a team is created, the user should 
-also be able to see:
-- the team's strongest stats
+also be able to: 
+- see the team's strongest stats
+- favourite or unfavourite any team
 
 
 ## Why is this project of interest to you? Who will use it?
@@ -32,6 +33,7 @@ but for players who are newer to the game as well!
 - add and remove characters to my team
 - select and deselect skills from characters
 - name and save my team
+- favourite or unfavourite my team
 - store a list of my teams
   - get a team from this list to view 
     and/or edit it

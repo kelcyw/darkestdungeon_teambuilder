@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+// The main application class that contains information for the main menu
+
 public class TeamMakerApp {
     private TeamList savedTeams;
     private List<HeroType> availableHeroTypes;
@@ -202,9 +204,27 @@ public class TeamMakerApp {
     // MODIFIES: this
     // EFFECTS: makes a new team and adds it to saved teams
     private void optionNew() {
-        Team newTeam = new Team("NewTeam");
-        savedTeams.addTeam(newTeam);
-        System.out.println("\nNew team has been created!");
+        System.out.println("What would you like to name your new team?");
+        String command = input.next();
+        if (checkForExistingTeam(command)) {
+            Team newTeam = new Team(command);
+            savedTeams.addTeam(newTeam);
+            System.out.println("\nThe new team " + command + " has been created!");
+        } else {
+            System.out.println("There is already a team with that name!");
+        }
+    }
+
+    // EFFECTS: helper function for optionNew, checks to see if there is a team with the given name
+    private boolean checkForExistingTeam(String newName) {
+        for (Team t : savedTeams.getSavedTeams()) {
+            String teamNameUpperCase = t.getTeamName().toUpperCase();
+            String newNameUpperCase = newName.toUpperCase();
+            if (newNameUpperCase.equals(teamNameUpperCase)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     // MODIFIES: this

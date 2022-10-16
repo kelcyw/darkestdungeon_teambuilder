@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+// Team is a collection of up to four heroes
+
 public class Team {
     private String teamName;
     private List<Hero> teamMembers;
@@ -38,10 +40,10 @@ public class Team {
         return favourite;
     }
 
+    // MODIFIES: this
     // EFFECTS: changes the team's favourite status
-    public boolean changeFavourite() {
+    public void changeFavourite() {
         favourite = !favourite;
-        return favourite;
     }
 
     // MODIFIES: this
@@ -58,7 +60,7 @@ public class Team {
 
     // REQUIRES: index must be between 0 and 3
     // MODIFIES: this
-    // EFFECTS: removes the given Hero from the team at given index
+    // EFFECTS: removes the given Hero from the team
     public void removeHeroFromTeam(Hero currentHero) {
         teamMembers.remove(currentHero);
     }
@@ -113,7 +115,7 @@ public class Team {
         }
     }
 
-    // EFFECTS: determines strongest stats (those that are most common in team)
+    // EFFECTS: determines strongest stats (those that are common in team)
     //          if no stats are common (i.e. <= 3 skills have the stat)
     //          return "none"
     public String determineStrengths() {
