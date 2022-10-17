@@ -116,6 +116,7 @@ public class EditMenu {
         return null;
     }
 
+    // MODIFIES: this
     // EFFECTS: removes a hero with the given name from the team
     //          if a hero w/ that name can't be found, do nothing
     public void removeHero(Team team, TeamList savedTeams, List<HeroType> availableHeroTypes, String heroName) {
@@ -138,7 +139,6 @@ public class EditMenu {
         removeHero(team, savedTeams, availableHeroTypes, heroName);
     }
 
-    // MODIFIES: this
     // EFFECTS: determines team's strengths
     public void optionAnalyzeTeam(Team team, TeamList savedTeams, List<HeroType> availableHeroTypes) {
         System.out.println("This team has: " + team.determineStrengths());
@@ -203,6 +203,7 @@ public class EditMenu {
         System.out.println(allHeroTypes);
     }
 
+    // MODIFIES: this
     // EFFECTS: changes the team's favourite status
     private void optionFavTeam(Team team, TeamList savedTeams, List<HeroType> availableHeroTypes) {
         team.changeFavourite();

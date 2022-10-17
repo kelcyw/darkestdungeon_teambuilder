@@ -21,10 +21,14 @@ public class HeroMenu {
         runHeroMenu(team, hero);
     }
 
+    // MODIFIES: this
+    // EFFECTS: handles user interaction for the hero edit menu
     private void runHeroMenu(Team team, Hero hero) {
         editHero(team, hero);
     }
 
+    // MODIFIES: this
+    // EFFECTS: gives the user options to edit the given hero
     private void editHero(Team team, Hero hero) {
         displayEditHeroMenu();
         String command = input.next();
@@ -32,6 +36,7 @@ public class HeroMenu {
         processEditHeroMenuCommand(command, team, hero);
     }
 
+    // EFFECTS: displays the edit menu for a hero
     private void displayEditHeroMenu() {
         System.out.println("\nWhat would you like to do? ");
         System.out.println("- Change the hero's name (RENAME)");
@@ -85,7 +90,7 @@ public class HeroMenu {
         editHero(team, hero);
     }
 
-    // MODIFIES: hero
+    // MODIFIES: this
     // EFFECTS: changes selected status of hero's skills
     private void optionSelectHeroSkills(Hero hero) {
         System.out.println("The hero has the following skills: ");
