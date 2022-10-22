@@ -1,12 +1,16 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 // Team is a collection of up to four heroes
 
-public class Team {
+public class Team implements Writable {
     private String teamName;
     private List<Hero> teamMembers;
     private boolean favourite;
@@ -126,5 +130,25 @@ public class Team {
         // count all the stat types: if any appear 3 or more times, then return stat type as string
         // if none do, then return "none"
         return determineCommonStats(allStatNames);
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", teamName);
+        json.put("members", membersToJson());
+        json.put("favourite", favourite);
+        return json;
+    }
+
+    // TODO: add specification
+    public JSONArray membersToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Hero h : teamMembers) {
+            jsonArray.put(h.toJson());
+        }
+
+        return jsonArray;
     }
 }

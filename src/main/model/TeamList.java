@@ -1,11 +1,15 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 // TeamList is a list of all the teams a user has created and saved
 
-public class TeamList {
+public class TeamList implements Writable {
     private List<Team> savedTeams;
 
     // EFFECTS: makes a new team list
@@ -47,4 +51,21 @@ public class TeamList {
         return favouriteTeams;
     }
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("teams", teamsToJson());
+        return json;
+    }
+
+    // TODO: add specification
+    public JSONArray teamsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Team t : savedTeams) {
+            jsonArray.put(t.toJson());
+        }
+
+        return jsonArray;
+    }
 }

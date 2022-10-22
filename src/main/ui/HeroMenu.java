@@ -95,7 +95,7 @@ public class HeroMenu {
     private void optionSelectHeroSkills(Hero hero) {
         System.out.println("The hero has the following skills: ");
         printHeroSkills(hero);
-        System.out.println("Which skill would you like to change the selected status of? ");
+        System.out.println("Which skill would you like to change the selected status of?");
         String skillName = input.next();
         changeSelectionStatus(skillName);
     }

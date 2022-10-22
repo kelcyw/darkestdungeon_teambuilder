@@ -30,11 +30,13 @@ but for players who are newer to the game as well!
 
 ## User Stories
 
-- add and remove characters to my team
-- select and deselect skills from characters
-- name and save my team
-- favourite or unfavourite my team
-- store a list of my teams
-  - get a team from this list to view 
+- as a user, I want to be able to add and remove characters to my team
+- as a user, I want to be able to select and deselect skills from characters
+- as a user, I want to be able to name and save my team
+- as a user, I want to be able to favourite or unfavourite my team
+- as a user, I want to be able to have a list of my teams
+  - as a user, I want to be able to get a team from this list to view 
     and/or edit it
-- see which stats the team is strong in
+- as a user, I want to be able to see which stats the team is strong in
+- as a user, I want to be able to save all of my saved teams to a file
+- as a user, I want to be able to reload that file and resume editing the saved teams list

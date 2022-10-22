@@ -2,7 +2,10 @@ package model;
 
 // Stat is an effect that a skill inflicts on others
 
-public class Stat {
+import org.json.JSONObject;
+import persistence.Writable;
+
+public class Stat implements Writable {
     private String statName;
     private int statChance;
     public static final int CHANCE_INCREMENT = 10;
@@ -37,4 +40,11 @@ public class Stat {
         statChance = statChance - CHANCE_INCREMENT;
     }
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("statname", statName);
+        json.put("statchance", statChance);
+        return json;
+    }
 }

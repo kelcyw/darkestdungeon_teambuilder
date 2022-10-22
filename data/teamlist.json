@@ -1,0 +1,88 @@
+{
+  "teams": [
+    {
+      "members": [
+        {
+          "level": 0,
+          "givenname": "Dismas",
+          "herotype": {
+            "skills": [
+              {
+                "stats": [],
+                "desc": "Wicked_Slice"
+              },
+              {
+                "stats": [],
+                "desc": "Pistol_Shot"
+              },
+              {
+                "stats": [
+                  {
+                    "statchance": 100,
+                    "statname": "Knockback"
+                  }
+                ],
+                "desc": "Point_Blank_Shot"
+              },
+              {
+                "stats": [
+                  {
+                    "statchance": 100,
+                    "statname": "Increase Crits Received"
+                  }
+                ],
+                "desc": "Grapeshot_Blast"
+              },
+              {
+                "stats": [
+                  {
+                    "statchance": 100,
+                    "statname": "Bleed"
+                  }
+                ],
+                "desc": "Open_Vein"
+              }
+            ],
+            "typename": "HIGHWAYMAN"
+          }
+        },
+        {
+          "level": 0,
+          "givenname": "Reynauld",
+          "herotype": {
+            "skills": [
+              {
+                "stats": [],
+                "desc": "Smite"
+              },
+              {
+                "stats": [],
+                "desc": "Zealous_Accusation"
+              },
+              {
+                "stats": [
+                  {
+                    "statchance": 100,
+                    "statname": "Stun"
+                  }
+                ],
+                "desc": "Stunning_Blow"
+              },
+              {
+                "stats": [],
+                "desc": "Holy_Lance"
+              },
+              {
+                "stats": [],
+                "desc": "Battle_Heal"
+              }
+            ],
+            "typename": "CRUSADER"
+          }
+        }
+      ],
+      "name": "Team1",
+      "favourite": true
+    }
+  ]
+}

@@ -1,18 +1,28 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 // HeroType represents a hero's classification
 // It determines their classification name and skillset
 
-public class HeroType {
+public class HeroType implements Writable {
     private String heroTypeName;
     private List<Skill> allHeroSkills;
 
     public HeroType(String heroTypeName, List<Skill> allHeroSkills) {
         this.heroTypeName = heroTypeName;
         this.allHeroSkills = allHeroSkills;
+    }
+
+    // TODO: test this later
+    public HeroType(HeroType heroType) {
+        this.heroTypeName = heroType.heroTypeName;
+        this.allHeroSkills = new ArrayList<>(heroType.allHeroSkills);
     }
 
     // EFFECTS: returns the hero's type name
@@ -56,4 +66,22 @@ public class HeroType {
         allHeroSkills.remove(currentSkill);
     }
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("typename", heroTypeName);
+        json.put("skills", skillsToJson());
+        return json;
+    }
+
+    // TODO: add specification
+    public JSONArray skillsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Skill s : allHeroSkills) {
+            jsonArray.put(s.toJson());
+        }
+
+        return jsonArray;
+    }
 }

@@ -1,11 +1,15 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 // Skill is an ability that a hero has, with associated stats it inflicts on others
 
-public class Skill {
+public class Skill implements Writable {
     private String skillDescription;
     private List<Stat> skillStats;
     private boolean selected;
@@ -51,4 +55,22 @@ public class Skill {
         skillStats.remove(currentStat);
     }
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("desc", skillDescription);
+        json.put("stats", statsToJson());
+        return json;
+    }
+
+    // TODO: add specification
+    public JSONArray statsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Stat s : skillStats) {
+            jsonArray.put(s.toJson());
+        }
+
+        return jsonArray;
+    }
 }

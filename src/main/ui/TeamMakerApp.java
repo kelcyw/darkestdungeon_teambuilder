@@ -1,17 +1,25 @@
 package ui;
 
 import model.*;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 // The main application class that contains information for the main menu
+// JSON-related code is modelled after JsonSerializationDemo
 
 public class TeamMakerApp {
     private TeamList savedTeams;
     private List<HeroType> availableHeroTypes;
     private Scanner input;
+    private static final String JSON_STORE = "./data/teamlist.json";
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     private HeroType highwayman;
     private HeroType crusader;
@@ -20,6 +28,8 @@ public class TeamMakerApp {
 
     // EFFECTS: runs team maker application
     public TeamMakerApp() {
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         runTeamMaker();
     }
 
@@ -60,6 +70,8 @@ public class TeamMakerApp {
         System.out.println("- Make a new team (NEW)");
         System.out.println("- Edit one of my saved teams (EDIT)");
         System.out.println("- Delete one of my saved teams (DELETE)");
+        System.out.println("- Saved all my current teams (SAVE)");
+        System.out.println("- Load another list of teams (LOAD)");
         System.out.println("- Exit the team maker (EXIT)");
     }
 
@@ -183,6 +195,10 @@ public class TeamMakerApp {
             optionEdit();
         } else if (command.equals("DELETE")) {
             optionDelete();
+        } else if (command.equals("SAVE")) {
+            optionSave();
+        } else if (command.equals("LOAD")) {
+            optionLoad();
         } else {
             System.out.println("\nNot a valid command!");
         }
@@ -249,12 +265,36 @@ public class TeamMakerApp {
     // MODIFIES: this
     // EFFECTS: finds the first team w/ given name and removes it from the list
     private void deleteTeam(String teamName) {
+        String givenTeamNameToCaps = teamName.toUpperCase();
         for (Team team : savedTeams.getSavedTeams()) {
-            if (team.getTeamName().equals(teamName)) {
+            String currentTeamName = team.getTeamName().toUpperCase();
+            if (currentTeamName.equals(givenTeamNameToCaps)) {
                 savedTeams.getSavedTeams().remove(team);
                 System.out.println("\n" + teamName + " has been removed!");
                 break;
             }
+        }
+    }
+
+    // EFFECTS: saves current list of teams to file
+    private void optionSave() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(savedTeams);
+            jsonWriter.close();
+            System.out.println("Saved all teams to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // EFFECTS: loads another list of teams from file
+    private void optionLoad() {
+        try {
+            savedTeams = jsonReader.read();
+            System.out.println("Loaded all teams from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
 }

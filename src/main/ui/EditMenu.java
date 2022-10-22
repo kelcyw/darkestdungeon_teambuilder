@@ -10,6 +10,11 @@ import java.util.Scanner;
 
 // EditMenu contains information and functionality for the edit menu
 
+// TODO:
+// random error messages appearing in console when none should be there (should mostly be fixed)
+// herotype is global for all instances of hero - duplicate heroes have their skillsets
+// affected by other heroes of the same type ... (need to ask TA abt this)
+
 public class EditMenu {
     Scanner input;
     String teamName;
@@ -32,6 +37,7 @@ public class EditMenu {
     //          if given team cannot be found, do nothing
     private void editTeam(String teamName, TeamList savedTeams, List<HeroType> availableHeroTypes) {
         String command = null;
+        int wrongMatches = 0;
         for (Team team : savedTeams.getSavedTeams()) {
             String actualTeamNameUpperCase = team.getTeamName().toUpperCase();
             String givenTeamNameUpperCase = teamName.toUpperCase();
@@ -43,8 +49,11 @@ public class EditMenu {
                 processEditMenuCommand(command, team, savedTeams, availableHeroTypes);
                 break;
             }
+            wrongMatches++;
         }
-        System.out.println("There is no team with that name!");
+        if (wrongMatches == savedTeams.getSavedTeams().size()) {
+            System.out.println("There is no team with that name!");
+        }
     }
 
     // EFFECTS: shows options for editing the given team
@@ -85,20 +94,20 @@ public class EditMenu {
     // MODIFIES: this
     // EFFECTS: adds a hero to the given team
     public void optionAddHero(Team team, TeamList savedTeams, List<HeroType> availableHeroTypes) {
-        HeroType inputHeroType = new HeroType("Placeholder", null);
-        String inputHeroTypeName = "";
-        String inputHeroName = "";
+        HeroType inputHeroType;
+        String inputHeroTypeName;
+        String inputHeroName;
         System.out.println("Here are the available hero types: ");
         printAvailableHeroTypes(availableHeroTypes);
         System.out.println("Enter the hero type you would like for the new hero: ");
         inputHeroTypeName = input.next();
         inputHeroTypeName = inputHeroTypeName.toUpperCase();
         inputHeroType = findHeroType(inputHeroTypeName, availableHeroTypes);
-        System.out.println("Enter the name you would like for the new hero: ");
-        inputHeroName = input.next();
         if (inputHeroType == null) {
             System.out.println("The selected hero type was not valid!");
         } else {
+            System.out.println("Enter the name you would like for the new hero: ");
+            inputHeroName = input.next();
             team.addHeroToTeam(new Hero(inputHeroName, inputHeroType));
             System.out.println("New hero added! Name: " + inputHeroName + ", Type: " + inputHeroTypeName);
             editTeam(team.getTeamName(), savedTeams, availableHeroTypes);
@@ -110,7 +119,7 @@ public class EditMenu {
     public HeroType findHeroType(String heroTypeName, List<HeroType> availableHeroTypes) {
         for (HeroType ht : availableHeroTypes) {
             if (heroTypeName.equals(ht.getHeroTypeName())) {
-                return ht;
+                return new HeroType(heroTypeName, ht.getHeroSkills());
             }
         }
         return null;
@@ -120,6 +129,7 @@ public class EditMenu {
     // EFFECTS: removes a hero with the given name from the team
     //          if a hero w/ that name can't be found, do nothing
     public void removeHero(Team team, TeamList savedTeams, List<HeroType> availableHeroTypes, String heroName) {
+        int wrongMatches = 0;
         for (Hero h : team.getTeamMembers()) {
             if (heroName.equals(h.getHeroGivenName())) {
                 team.removeHeroFromTeam(h);
@@ -127,7 +137,11 @@ public class EditMenu {
                 editTeam(teamName, savedTeams, availableHeroTypes);
                 break;
             }
+            wrongMatches++;
+        }
+        if (wrongMatches == team.getTeamMembers().size()) {
             System.out.println("There is no hero with that given name!");
+            editTeam(teamName, savedTeams, availableHeroTypes);
         }
     }
 
@@ -159,12 +173,16 @@ public class EditMenu {
     //          if not, does nothing
     private void changeHero(Team team, String heroName,
                             TeamList savedTeams, List<HeroType> availableHeroesTypes) {
+        int wrongMatches = 0;
         for (Hero h : team.getTeamMembers()) {
             if (heroName.equals(h.getHeroGivenName())) {
                 new HeroMenu(team, h);
                 editTeam(team.getTeamName(), savedTeams, availableHeroesTypes);
                 break;
             }
+            wrongMatches++;
+        }
+        if (wrongMatches == team.getTeamMembers().size()) {
             System.out.println("There is no hero with that given name!");
         }
     }

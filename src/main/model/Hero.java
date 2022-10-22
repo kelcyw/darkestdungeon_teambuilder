@@ -2,7 +2,10 @@ package model;
 
 // Hero represents a character that can be added to a team
 
-public class Hero {
+import org.json.JSONObject;
+import persistence.Writable;
+
+public class Hero implements Writable {
 
     private String givenName;
     private int heroLevel;
@@ -66,5 +69,15 @@ public class Hero {
     public void setHeroLevel(int newLevel) {
         heroLevel = newLevel;
     }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("givenname", givenName);
+        json.put("level", heroLevel);
+        json.put("herotype", heroType.toJson());
+        return json;
+    }
+
 
 }
