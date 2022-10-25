@@ -17,7 +17,7 @@ public class TeamMakerApp {
     private TeamList savedTeams;
     private List<HeroType> availableHeroTypes;
     private Scanner input;
-    private static final String JSON_STORE = "./data/teamlist.json";
+    private static final String JSON_STORE = "./data/teamList.json";
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
