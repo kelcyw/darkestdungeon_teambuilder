@@ -19,12 +19,6 @@ public class HeroType implements Writable {
         this.allHeroSkills = allHeroSkills;
     }
 
-    // TODO: test this later
-    public HeroType(HeroType heroType) {
-        this.heroTypeName = heroType.heroTypeName;
-        this.allHeroSkills = new ArrayList<>(heroType.allHeroSkills);
-    }
-
     // EFFECTS: returns the hero's type name
     public String getHeroTypeName() {
         return heroTypeName;

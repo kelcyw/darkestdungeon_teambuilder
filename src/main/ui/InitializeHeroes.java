@@ -1,64 +1,19 @@
-package persistence;
+package ui;
 
-import model.*;
-import org.junit.jupiter.api.Test;
+// contains methods for initializing hero types
 
-import java.io.IOException;
+import model.HeroType;
+import model.Skill;
+import model.Stat;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+public class InitializeHeroes {
 
-// Modelled after JsonReaderTest in JsonSerializationDemo
-
-public class JsonReaderTest extends JsonTest {
-
-    @Test
-    void testReaderNonExistentFile() {
-        JsonReader reader = new JsonReader("./data/noSuchFile.json");
-        try {
-            TeamList tl = reader.read();
-            fail("IOException expected");
-        } catch (IOException e) {
-            // passes
-        }
-    }
-
-    @Test
-    void testReaderEmptyTeamList() {
-        JsonReader reader = new JsonReader("./data/testReaderEmptyTeamList.json");
-        try {
-            TeamList tl = reader.read();
-            assertEquals(0, tl.getSavedTeams().size());
-        } catch (IOException e) {
-            fail("Couldn't read from file");
-        }
-    }
-
-    @Test
-    void testReaderGeneralTeamList() {
-        JsonReader reader = new JsonReader("./data/testReaderGeneralTeamList.json");
-        try {
-            Team team1 = new Team("Team1");
-            Team team2 = new Team("Team2");
-            team1.addHeroToTeam(initializeHighwayman());
-            team1.addHeroToTeam(initializeCrusader());
-            team2.addHeroToTeam(initializePlagueDoctor());
-            team2.addHeroToTeam(initializeVestal());
-            team1.changeFavourite();
-            TeamList tl = reader.read();
-            assertEquals(2, tl.getSavedTeams().size());
-            checkTeam(team1, tl.getTeam(0));
-            checkTeam(team2, tl.getTeam(1));
-
-        } catch (IOException e) {
-            fail("Couldn't read from file");
-        }
-    }
-
-    // EFFECTS: helper function for initializing a highwayman to add to test team
-    private Hero initializeHighwayman() {
+    // MODIFIES: this
+    // EFFECTS: initializes the highwayman character
+    public static HeroType initializeHighwayMan() {
         Stat knockBack = new Stat("Knockback", 100);
         Stat moreCrit = new Stat("Increase Crits Received", 100);
         Stat bleed = new Stat("Bleed", 100);
@@ -79,11 +34,12 @@ public class JsonReaderTest extends JsonTest {
         highwaymanSkillset.add(highwaymanSkill5);
 
         HeroType highwayman = new HeroType("HIGHWAYMAN", highwaymanSkillset);
-        return new Hero("Dismas", highwayman);
+        return highwayman;
     }
 
-    // EFFECTS: helper function for initializing a crusader to add to test team
-    private Hero initializeCrusader() {
+    // MODIFIES: this
+    // EFFECTS: initializes the crusader character
+    public static HeroType initializeCrusader() {
         Stat stun = new Stat("Stun", 100);
 
         Skill crusaderSkill1 = new Skill("Smite");
@@ -101,11 +57,12 @@ public class JsonReaderTest extends JsonTest {
         crusaderSkillset.add(crusaderSkill5);
 
         HeroType crusader = new HeroType("CRUSADER", crusaderSkillset);
-        return new Hero("Reynauld", crusader);
+        return crusader;
     }
 
-    // EFFECTS: helper function for initializing a plague doctor to add to test team
-    private Hero initializePlagueDoctor() {
+    // MODIFIES: this
+    // EFFECTS: initializes the plague doctor character
+    public static HeroType initializePlagueDoctor() {
         Stat blight = new Stat("Blight", 100);
         Stat stun = new Stat("Stun", 100);
         Stat bleed = new Stat("Bleed", 100);
@@ -130,11 +87,12 @@ public class JsonReaderTest extends JsonTest {
         plagueDoctorSkillset.add(plagueDoctorSkill5);
 
         HeroType plaguedoctor = new HeroType("PLAGUEDOCTOR", plagueDoctorSkillset);
-        return new Hero("Paracelsus", plaguedoctor);
+        return plaguedoctor;
     }
 
-    // EFFECTS: helper function for initializing a plague doctor to add to test team
-    private Hero initializeVestal() {
+    // MODIFIES: this
+    // EFFECTS: initializes the vestal character
+    public static HeroType initializeVestal() {
         Stat stun = new Stat("Stun", 100);
 
         Skill vestalSkill1 = new Skill("Judgement");
@@ -152,6 +110,6 @@ public class JsonReaderTest extends JsonTest {
         vestalSkillset.add(vestalSkill5);
 
         HeroType vestal = new HeroType("VESTAL", vestalSkillset);
-        return new Hero("Junia", vestal);
+        return vestal;
     }
 }

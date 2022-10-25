@@ -11,7 +11,6 @@ import java.util.Scanner;
 // EditMenu contains information and functionality for the edit menu
 
 // TODO:
-// random error messages appearing in console when none should be there (should mostly be fixed)
 // herotype is global for all instances of hero - duplicate heroes have their skillsets
 // affected by other heroes of the same type ... (need to ask TA abt this)
 
@@ -119,7 +118,15 @@ public class EditMenu {
     public HeroType findHeroType(String heroTypeName, List<HeroType> availableHeroTypes) {
         for (HeroType ht : availableHeroTypes) {
             if (heroTypeName.equals(ht.getHeroTypeName())) {
-                return new HeroType(heroTypeName, ht.getHeroSkills());
+                if (heroTypeName.equals("HIGHWAYMAN")) {
+                    return InitializeHeroes.initializeHighwayMan();
+                } else if (heroTypeName.equals("CRUSADER")) {
+                    return InitializeHeroes.initializeCrusader();
+                } else if (heroTypeName.equals("PLAGUEDOCTOR")) {
+                    return InitializeHeroes.initializePlagueDoctor();
+                } else if (heroTypeName.equals("VESTAL")) {
+                    return InitializeHeroes.initializeVestal();
+                }
             }
         }
         return null;
