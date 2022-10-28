@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InitializeHeroes {
-
     // MODIFIES: this
     // EFFECTS: initializes the highwayman character
     public static HeroType initializeHighwayMan() {

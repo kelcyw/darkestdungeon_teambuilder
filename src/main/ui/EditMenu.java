@@ -10,10 +10,6 @@ import java.util.Scanner;
 
 // EditMenu contains information and functionality for the edit menu
 
-// TODO:
-// herotype is global for all instances of hero - duplicate heroes have their skillsets
-// affected by other heroes of the same type ... (need to ask TA abt this)
-
 public class EditMenu {
     Scanner input;
     String teamName;

@@ -6,6 +6,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+// contains methods for checking that JSON data is accurate
 public class JsonTest {
     // EFFECTS: compares expected team to actual team
     protected void checkTeam(Team team1, Team team) {

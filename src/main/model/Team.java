@@ -141,7 +141,7 @@ public class Team implements Writable {
         return json;
     }
 
-    // TODO: add specification
+    // EFFECTS: returns members in this team as a JSON array
     public JSONArray membersToJson() {
         JSONArray jsonArray = new JSONArray();
 

@@ -58,7 +58,7 @@ public class TeamList implements Writable {
         return json;
     }
 
-    // TODO: add specification
+    // EFFECTS: returns teams in this TeamList as a JSON array
     public JSONArray teamsToJson() {
         JSONArray jsonArray = new JSONArray();
 

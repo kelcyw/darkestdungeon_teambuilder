@@ -14,6 +14,7 @@ public class HeroType implements Writable {
     private String heroTypeName;
     private List<Skill> allHeroSkills;
 
+    // EFFECTS: creates a new HeroType
     public HeroType(String heroTypeName, List<Skill> allHeroSkills) {
         this.heroTypeName = heroTypeName;
         this.allHeroSkills = allHeroSkills;

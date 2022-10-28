@@ -63,7 +63,7 @@ public class Skill implements Writable {
         return json;
     }
 
-    // TODO: add specification
+    // EFFECTS: returns stats in this skill as a JSON array
     public JSONArray statsToJson() {
         JSONArray jsonArray = new JSONArray();
 
