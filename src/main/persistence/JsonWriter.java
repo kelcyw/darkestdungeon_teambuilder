@@ -11,6 +11,7 @@ import java.io.PrintWriter;
 
 // Represents a writer that writes JSON representation of TeamList to file
 public class JsonWriter {
+    private static final int TAB = 4;
     private PrintWriter writer;
     private String destination;
 
@@ -30,7 +31,7 @@ public class JsonWriter {
     // EFFECTS: writes JSON representation of TeamList to file
     public void write(TeamList tl) {
         JSONObject json = tl.toJson();
-        saveToFile(json.toString());
+        saveToFile(json.toString(TAB));
     }
 
     // MODIFIES: this
