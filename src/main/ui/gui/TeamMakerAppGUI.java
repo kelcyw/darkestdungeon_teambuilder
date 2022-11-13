@@ -103,6 +103,7 @@ public class TeamMakerAppGUI {
     // MODIFIES: panel
     // EFFECTS: adds team buttons to panel
     private void addTeamButtons(JPanel panel) {
+        panel.removeAll();
         for (Team team : savedTeams.getSavedTeams()) {
             JButton button = new JButton(team.getTeamName());
             button.addActionListener(new ActionListener() {
@@ -275,41 +276,70 @@ public class TeamMakerAppGUI {
 
     // MODIFIES: this
     // EFFECTS: adds new team button
-    // TODO: change so that the dialog box automatically closes when enter is pressed?
     private void addTeam(ActionEvent e) {
-        JTextField input = new JTextField();
+        JOptionPane teamNamePrompt = new JOptionPane();
 
-        input.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String text = input.getText();
-                savedTeams.addTeam(new Team(text));
-                JButton newTeamButton = new JButton(text);
-                teamPanel.add(newTeamButton);
+        String s = (String)teamNamePrompt.showInputDialog(
+                frame,
+                "Please enter a name for your new team: ",
+                "Create New Team",
+                teamNamePrompt.PLAIN_MESSAGE);
+
+        // runs if string is valid
+        if ((s != null) && (s.length() > 0)) {
+            savedTeams.addTeam(new Team(s));
+            addTeamButtons(teamPanel);
+            teamPanel.revalidate();
+        } else {
+            // runs if string was null
+            showFailMessage("Invalid team name!");
+        }
+
+
+    }
+
+    // MODIFIES: this
+    // EFFECTS: removes last team button
+    // TODO: bidirectional relationship between teams and their buttons?
+    private void removeTeam(ActionEvent e) {
+        JOptionPane teamNamePrompt = new JOptionPane();
+
+        String s = (String)teamNamePrompt.showInputDialog(
+                frame,
+                "Please enter the name of the team you would like to remove: ",
+                "Delete a team",
+                teamNamePrompt.PLAIN_MESSAGE);
+
+        // runs if string is valid
+        if ((s != null) && (s.length() > 0)) {
+            for (Team team : savedTeams.getSavedTeams()) {
+                if (s.equals(team.getTeamName())) {
+                    savedTeams.removeTeam(team);
+                    addTeamButtons(teamPanel);
+                    teamPanel.revalidate();
+                    break;
+                } else {
+                    showFailMessage("Couldn't find a team with name: " + s);
+                }
             }
-        });
+        } else {
+            // runs if string was null
+            showFailMessage("Invalid team name!");
+        }
 
-        JDialog teamNamePrompt = new JDialog();
-        teamNamePrompt.setSize(new Dimension(100, 75));
-        teamNamePrompt.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
-        // ^ prevent user from doing something else
-        teamNamePrompt.setLocationRelativeTo(null);
-        teamNamePrompt.add(input);
+
         teamNamePrompt.setVisible(true);
 
         teamPanel.setVisible(false);
         teamPanel.setVisible(true);
     }
 
-    // MODIFIES: this
-    // EFFECTS: removes last team button
-    // TODO: placeholder method; add ability to click on team button that should be removed
-    private void removeTeam(ActionEvent e) {
-        if (teamPanel.getComponentCount() > 0) {
-            teamPanel.remove(teamPanel.getComponentCount() - 1);
-        }
-        teamPanel.setVisible(false);
-        teamPanel.setVisible(true);
+    private void showFailMessage(String msg) {
+        JOptionPane failMessage = new JOptionPane();
+        failMessage.showMessageDialog(frame,
+                msg,
+                "Warning",
+                JOptionPane.PLAIN_MESSAGE);
     }
 
     private void loadTeams(ActionEvent e) {
