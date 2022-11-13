@@ -1,36 +1,5 @@
 {"teams": [{
-    "members": [{
-        "level": 0,
-        "givenname": "Junia",
-        "herotype": {
-            "skills": [
-                {
-                    "stats": [],
-                    "desc": "Judgement"
-                },
-                {
-                    "stats": [{
-                        "statchance": 100,
-                        "statname": "Stun"
-                    }],
-                    "desc": "Dazzling_Light"
-                },
-                {
-                    "stats": [],
-                    "desc": "Divine_Grace"
-                },
-                {
-                    "stats": [],
-                    "desc": "Divine_Comfort"
-                },
-                {
-                    "stats": [],
-                    "desc": "Illumination"
-                }
-            ],
-            "typename": "VESTAL"
-        }
-    }],
-    "name": "Team1",
+    "members": [],
+    "name": "Team 1",
     "favourite": false
 }]}
