@@ -34,11 +34,16 @@ public class TeamMakerAppGUI {
     private static final int HEIGHT = 600;
     private static final int TEAMVIEW_WIDTH = 500;
     private static final int TEAMVIEW_HEIGHT = 600;
-    private static final int TEAMVIEW_BUTTON_X = 37;
 
     private JFrame frame;
     private JPanel mainPanel;
     private JPanel teamPanel;
+
+    private ImageIcon iconHighwayman = new ImageIcon("./data/images/icon_highwayman.png");
+    private ImageIcon iconCrusader = new ImageIcon("./data/images/icon_crusader.png");
+    private ImageIcon iconPlagueDoctor = new ImageIcon("./data/images/icon_plaguedoctor.png");
+    private ImageIcon iconVestal = new ImageIcon("./data/images/icon_vestal.png");
+
 
     // EFFECTS: runs the team maker application (with GUI)
     public TeamMakerAppGUI() {
@@ -53,9 +58,6 @@ public class TeamMakerAppGUI {
         initializeHeroTypes();
 
         savedTeams =  new TeamList();
-        Team team1 = new Team("Team 1");
-        team1.addHeroToTeam(new Hero("Dismas", availableHeroTypes.get(0)));
-        savedTeams.addTeam(team1);
 
         initializeGraphics();
     }
@@ -110,19 +112,21 @@ public class TeamMakerAppGUI {
                 }
             });
             panel.add(button, BorderLayout.CENTER);
+            panel.setVisible(false);
+            panel.setVisible(true);
         }
     }
 
     // MODIFIES: toolbar
     // EFFECTS: adds tool buttons for toolbar
     private void addToolButtons(JToolBar tb) {
-        initializeAddButton(tb);
+        initializeNewButton(tb);
         initializeDelButton(tb);
         initializeLoadButton(tb);
         initializeSaveButton(tb);
     }
 
-    private void initializeAddButton(JToolBar tb) {
+    private void initializeNewButton(JToolBar tb) {
         JButton buttonNew = new JButton("New Team");
         buttonNew.addActionListener(new ActionListener() {
             @Override
@@ -178,8 +182,8 @@ public class TeamMakerAppGUI {
         teamView.setLocationRelativeTo(null);
         teamView.setLayout(new BorderLayout());
 
-        showMembers(teamView, team);
-        addTeamOptions(teamView);
+        showContent(teamView, team);
+        addTeamOptions(teamView, team);
 
         teamView.setVisible(false);
         teamView.setVisible(true);
@@ -187,37 +191,112 @@ public class TeamMakerAppGUI {
 
     // MODIFIES: teamView
     // EFFECTS: adds option buttons for teamView dialog
-    private void addTeamOptions(JDialog dialog) {
+    private void addTeamOptions(JDialog dialog, Team team) {
         JPanel teamOptions = new JPanel();
-        JButton buttonAdd = new JButton("Add Hero");
-        JButton buttonRem = new JButton("Remove Hero");
-        JButton buttonFav = new JButton("Favourite");
-        teamOptions.add(buttonAdd);
-        teamOptions.add(buttonRem);
-        teamOptions.add(buttonFav);
+        initializeAddButton(dialog, teamOptions, team);
+        initializeRemButton(dialog, teamOptions, team);
+        initializeFavButton(dialog, teamOptions, team);
+
         dialog.add(teamOptions, BorderLayout.PAGE_END);
 
     }
 
+    private void initializeAddButton(JDialog dialog, JPanel panel, Team team) {
+        JButton buttonAdd = new JButton("Add Hero");
+        buttonAdd.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                team.addHeroToTeam(new Hero("Dismas", availableHeroTypes.get(0)));
+                showContent(dialog, team);
+                dialog.revalidate();
+            }
+        });
+        panel.add(buttonAdd);
+    }
+
+    private void initializeRemButton(JDialog dialog, JPanel panel, Team team) {
+        JButton buttonRem = new JButton("Remove Hero");
+        buttonRem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                team.removeHeroFromTeam(team.getHero(0));
+                showContent(dialog, team);
+                dialog.revalidate();
+            }
+        });
+        panel.add(buttonRem);
+    }
+
+    private void initializeFavButton(JDialog dialog, JPanel panel, Team team) {
+        JButton buttonFav = new JButton("Favourite");
+        buttonFav.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                team.changeFavourite();
+                showContent(dialog, team);
+                dialog.revalidate();
+            }
+        });
+        panel.add(buttonFav);
+    }
+
     // MODIFIES: this
-    // EFFECTS: displays members of current team in teamview dialog
-    private void showMembers(JDialog dialog, Team team) {
-        JPanel teamMembers = new JPanel();
-        teamMembers.setLayout(new BoxLayout(teamMembers, BoxLayout.PAGE_AXIS));
+    // EFFECTS: displays members and favourite status of current team in teamview dialog
+    private void showContent(JDialog dialog, Team team) {
+        JPanel teamContent = new JPanel();
+        teamContent.setLayout(new BoxLayout(teamContent, BoxLayout.PAGE_AXIS));
         for (Hero h : team.getTeamMembers()) {
+            String heroTypeName = h.getHeroType().getHeroTypeName();
             JLabel heroLabel = new JLabel("Name: " + h.getHeroGivenName()
-                    + ", Class: " + h.getHeroType().getHeroTypeName());
-            teamMembers.add(heroLabel);
+                    + ", Class: " + heroTypeName);
+            JLabel heroIcon = new JLabel(getHeroIcon(heroTypeName));
+            teamContent.add(heroIcon);
+            teamContent.add(heroLabel);
         }
-        dialog.add(teamMembers);
+        JLabel favLabel = new JLabel("Favourite?: " + team.isFavourite());
+        teamContent.add(favLabel);
+        dialog.add(teamContent);
+    }
+
+    // EFFECTS: returns the icon for the given hero type name
+    private ImageIcon getHeroIcon(String heroTypeName) {
+        if (heroTypeName.equals(availableHeroTypes.get(0).getHeroTypeName())) {
+            return iconHighwayman;
+        } else if (heroTypeName.equals(availableHeroTypes.get(1).getHeroTypeName())) {
+            return iconCrusader;
+        } else if (heroTypeName.equals(availableHeroTypes.get(2).getHeroTypeName())) {
+            return iconPlagueDoctor;
+        } else if (heroTypeName.equals(availableHeroTypes.get(3).getHeroTypeName())) {
+            return iconVestal;
+        } else {
+            return new ImageIcon("./data/tobs.jpg");
+        }
     }
 
     // MODIFIES: this
     // EFFECTS: adds new team button
-    // TODO: placeholder method; add ability to name new team immediately
+    // TODO: change so that the dialog box automatically closes when enter is pressed?
     private void addTeam(ActionEvent e) {
-        JButton newTeamButton = new JButton("New Team");
-        teamPanel.add(newTeamButton);
+        JTextField input = new JTextField();
+
+        input.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String text = input.getText();
+                savedTeams.addTeam(new Team(text));
+                JButton newTeamButton = new JButton(text);
+                teamPanel.add(newTeamButton);
+            }
+        });
+
+        JDialog teamNamePrompt = new JDialog();
+        teamNamePrompt.setSize(new Dimension(100, 75));
+        teamNamePrompt.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+        // ^ prevent user from doing something else
+        teamNamePrompt.setLocationRelativeTo(null);
+        teamNamePrompt.add(input);
+        teamNamePrompt.setVisible(true);
+
         teamPanel.setVisible(false);
         teamPanel.setVisible(true);
     }
@@ -237,6 +316,7 @@ public class TeamMakerAppGUI {
         try {
             savedTeams = jsonReader.read();
             System.out.println("Loaded all teams from " + JSON_STORE);
+            addTeamButtons(teamPanel);
         } catch (IOException exc) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }
