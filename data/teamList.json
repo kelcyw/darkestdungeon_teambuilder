@@ -1,183 +1,160 @@
-{
-  "teams": [
+{"teams": [
     {
-      "members": [
-        {
-          "level": 0,
-          "givenname": "Dismas",
-          "herotype": {
-            "skills": [
-              {
-                "stats": [],
-                "desc": "Wicked_Slice"
-              },
-              {
-                "stats": [],
-                "desc": "Pistol_Shot"
-              },
-              {
-                "stats": [
-                  {
-                    "statchance": 100,
-                    "statname": "Knockback"
-                  }
-                ],
-                "desc": "Point_Blank_Shot"
-              },
-              {
-                "stats": [
-                  {
-                    "statchance": 100,
-                    "statname": "Increase Crits Received"
-                  }
-                ],
-                "desc": "Grapeshot_Blast"
-              },
-              {
-                "stats": [
-                  {
-                    "statchance": 100,
-                    "statname": "Bleed"
-                  }
-                ],
-                "desc": "Open_Vein"
-              }
-            ],
-            "typename": "HIGHWAYMAN"
-          }
-        },
-        {
-          "level": 0,
-          "givenname": "Reynauld",
-          "herotype": {
-            "skills": [
-              {
-                "stats": [],
-                "desc": "Smite"
-              },
-              {
-                "stats": [],
-                "desc": "Zealous_Accusation"
-              },
-              {
-                "stats": [
-                  {
-                    "statchance": 100,
-                    "statname": "Stun"
-                  }
-                ],
-                "desc": "Stunning_Blow"
-              },
-              {
-                "stats": [],
-                "desc": "Holy_Lance"
-              },
-              {
-                "stats": [],
-                "desc": "Battle_Heal"
-              }
-            ],
-            "typename": "CRUSADER"
-          }
-        }
-      ],
-      "name": "Team1",
-      "favourite": true
+        "members": [
+            {
+                "level": 0,
+                "givenname": "Dismas",
+                "herotype": {
+                    "skills": [
+                        {
+                            "stats": [],
+                            "desc": "Wicked_Slice"
+                        },
+                        {
+                            "stats": [],
+                            "desc": "Pistol_Shot"
+                        },
+                        {
+                            "stats": [{
+                                "statchance": 100,
+                                "statname": "Knockback"
+                            }],
+                            "desc": "Point_Blank_Shot"
+                        },
+                        {
+                            "stats": [{
+                                "statchance": 100,
+                                "statname": "Increase Crits Received"
+                            }],
+                            "desc": "Grapeshot_Blast"
+                        },
+                        {
+                            "stats": [{
+                                "statchance": 100,
+                                "statname": "Bleed"
+                            }],
+                            "desc": "Open_Vein"
+                        }
+                    ],
+                    "typename": "HIGHWAYMAN"
+                }
+            },
+            {
+                "level": 0,
+                "givenname": "Reynauld",
+                "herotype": {
+                    "skills": [
+                        {
+                            "stats": [],
+                            "desc": "Smite"
+                        },
+                        {
+                            "stats": [],
+                            "desc": "Zealous_Accusation"
+                        },
+                        {
+                            "stats": [{
+                                "statchance": 100,
+                                "statname": "Stun"
+                            }],
+                            "desc": "Stunning_Blow"
+                        },
+                        {
+                            "stats": [],
+                            "desc": "Holy_Lance"
+                        },
+                        {
+                            "stats": [],
+                            "desc": "Battle_Heal"
+                        }
+                    ],
+                    "typename": "CRUSADER"
+                }
+            }
+        ],
+        "name": "Team1",
+        "favourite": true
     },
-
     {
-      "members": [
-        {
-          "level": 0,
-          "givenname": "Paracelsus",
-          "herotype": {
-            "skills": [
-              {
-                "stats": [
-                  {
-                    "statchance": 100,
-                    "statname": "Blight"
-                  }
-                ],
-                "desc": "Noxious_Blast"
-              },
-              {
-                "stats": [
-                  {
-                    "statchance": 100,
-                    "statname": "Blight"
-                  }
-                ],
-                "desc": "Plague_Grenade"
-              },
-              {
-                "stats": [
-                  {
-                    "statchance": 100,
-                    "statname": "Stun"
-                  }
-                ],
-                "desc": "Blinding_Gas"
-              },
-              {
-                "stats": [
-                  {
-                    "statchance": 100,
-                    "statname": "Bleed"
-                  }
-                ],
-                "desc": "Incision"
-              },
-              {
-                "stats": [
-                  {
-                    "statchance": 200,
-                    "statname": "Buff Damage and Speed"
-                  }
-                ],
-                "desc": "Emboldening_Vapours"
-              }
-            ],
-            "typename": "PLAGUEDOCTOR"
-          }
-        },
-        {
-          "level": 0,
-          "givenname": "Junia",
-          "herotype": {
-            "skills": [
-              {
-                "stats": [],
-                "desc": "Judgement"
-              },
-              {
-                "stats": [
-                  {
-                    "statchance": 100,
-                    "statname": "Stun"
-                  }
-                ],
-                "desc": "Dazzling_Light"
-              },
-              {
-                "stats": [],
-                "desc": "Divine_Grace"
-              },
-              {
-                "stats": [],
-                "desc": "Divine_Comfort"
-              },
-              {
-                "stats": [],
-                "desc": "Illumination"
-              }
-            ],
-            "typename": "VESTAL"
-          }
-        }
-      ],
-      "name": "Team2",
-      "favourite": false
+        "members": [
+            {
+                "level": 0,
+                "givenname": "Paracelsus",
+                "herotype": {
+                    "skills": [
+                        {
+                            "stats": [{
+                                "statchance": 100,
+                                "statname": "Blight"
+                            }],
+                            "desc": "Noxious_Blast"
+                        },
+                        {
+                            "stats": [{
+                                "statchance": 100,
+                                "statname": "Blight"
+                            }],
+                            "desc": "Plague_Grenade"
+                        },
+                        {
+                            "stats": [{
+                                "statchance": 100,
+                                "statname": "Stun"
+                            }],
+                            "desc": "Blinding_Gas"
+                        },
+                        {
+                            "stats": [{
+                                "statchance": 100,
+                                "statname": "Bleed"
+                            }],
+                            "desc": "Incision"
+                        },
+                        {
+                            "stats": [{
+                                "statchance": 200,
+                                "statname": "Buff Damage and Speed"
+                            }],
+                            "desc": "Emboldening_Vapours"
+                        }
+                    ],
+                    "typename": "PLAGUEDOCTOR"
+                }
+            },
+            {
+                "level": 0,
+                "givenname": "Junia",
+                "herotype": {
+                    "skills": [
+                        {
+                            "stats": [],
+                            "desc": "Judgement"
+                        },
+                        {
+                            "stats": [{
+                                "statchance": 100,
+                                "statname": "Stun"
+                            }],
+                            "desc": "Dazzling_Light"
+                        },
+                        {
+                            "stats": [],
+                            "desc": "Divine_Grace"
+                        },
+                        {
+                            "stats": [],
+                            "desc": "Divine_Comfort"
+                        },
+                        {
+                            "stats": [],
+                            "desc": "Illumination"
+                        }
+                    ],
+                    "typename": "VESTAL"
+                }
+            }
+        ],
+        "name": "Team2",
+        "favourite": false
     }
-  ]
-}
+]}
