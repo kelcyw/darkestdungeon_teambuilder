@@ -1,12 +1,9 @@
 package ui.gui;
 
-import model.Hero;
-import model.HeroType;
 import model.Team;
 import model.TeamList;
 import persistence.JsonReader;
 import persistence.JsonWriter;
-import ui.InitializeHeroes;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,36 +11,25 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 // The main application class that contains information for the main menu (GUI version)
 // JSON-related code is modelled after JsonSerializationDemo
-// GUI-related code is partially based on code from SimpleDrawingPlayer
+// GUI-related code is partially based on code from SimpleDrawingPlayer and from Java Swing Tutorials
 
 public class TeamMakerAppGUI {
 
     private TeamList savedTeams;
-    private List<HeroType> availableHeroTypes;
 
     private static final String JSON_STORE = "./data/teamList.json";
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
-    private static final int WIDTH = 1000;
-    private static final int HEIGHT = 600;
-    private static final int TEAMVIEW_WIDTH = 500;
-    private static final int TEAMVIEW_HEIGHT = 600;
-
     private JFrame frame;
     private JPanel mainPanel;
-    private JPanel teamPanel;
+    private TeamPanel teamPanel;
 
-    private ImageIcon iconHighwayman = new ImageIcon("./data/images/icon_highwayman.png");
-    private ImageIcon iconCrusader = new ImageIcon("./data/images/icon_crusader.png");
-    private ImageIcon iconPlagueDoctor = new ImageIcon("./data/images/icon_plaguedoctor.png");
-    private ImageIcon iconVestal = new ImageIcon("./data/images/icon_vestal.png");
-
+    private static final int WIDTH = 1000;
+    private static final int HEIGHT = 600;
 
     // EFFECTS: runs the team maker application (with GUI)
     public TeamMakerAppGUI() {
@@ -52,19 +38,16 @@ public class TeamMakerAppGUI {
         runTeamMaker();
     }
 
-    // EFFECTS: initializes graphics, heroTypes
+    // EFFECTS: instantiates team list, initializes graphics
     private void runTeamMaker() {
-        availableHeroTypes = new ArrayList<>();
-        initializeHeroTypes();
-
         savedTeams =  new TeamList();
-
         initializeGraphics();
     }
 
     // MODIFIES: this
     // EFFECTS: draws the JFrame window where the TeamMaker application will operate
-    //          adds panel and panel's associated elements
+    //          adds mainPanel and mainPanel's associated elements
+    //          adds teamPanel
     private void initializeGraphics() {
         frame = new JFrame();
         frame.setLayout(new BorderLayout());
@@ -76,10 +59,7 @@ public class TeamMakerAppGUI {
         mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
 
-        teamPanel = new JPanel();
-        teamPanel.setLayout(new FlowLayout());
-        addTeamButtons(teamPanel);
-        teamPanel.setVisible(true);
+        this.teamPanel = new TeamPanel(savedTeams);
 
         JToolBar toolbar = new JToolBar();
         toolbar.setFloatable(false);
@@ -92,39 +72,13 @@ public class TeamMakerAppGUI {
     }
 
     // MODIFIES: this
-    // EFFECTS: initializes all hero types
-    private void initializeHeroTypes() {
-        availableHeroTypes.add(InitializeHeroes.initializeHighwayMan());
-        availableHeroTypes.add(InitializeHeroes.initializeCrusader());
-        availableHeroTypes.add(InitializeHeroes.initializePlagueDoctor());
-        availableHeroTypes.add(InitializeHeroes.initializeVestal());
-    }
-
-    // MODIFIES: this
-    // EFFECTS: adds team buttons to panel
-    private void addTeamButtons(JPanel panel) {
-        panel.removeAll();
-        for (Team team : savedTeams.getSavedTeams()) {
-            JButton button = new JButton(team.getTeamName());
-            button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    openTeamView(e, team);
-                }
-            });
-            panel.add(button, BorderLayout.CENTER);
-            panel.setVisible(false);
-            panel.setVisible(true);
-        }
-    }
-
-    // MODIFIES: this
     // EFFECTS: adds tool buttons for toolbar
     private void addToolButtons(JToolBar tb) {
         initializeNewButton(tb);
         initializeDelButton(tb);
         initializeLoadButton(tb);
         initializeSaveButton(tb);
+        initializeShowFavButton(tb);
     }
 
     // MODIFIES: toolbar
@@ -180,167 +134,19 @@ public class TeamMakerAppGUI {
         tb.add(buttonSave);
     }
 
-    // MODIFIES: this
-    // EFFECTS: opens up team view for clicked team button
-    private void openTeamView(ActionEvent e, Team team) {
-        JDialog teamView = new JDialog();
-        teamView.setSize(new Dimension(TEAMVIEW_WIDTH,TEAMVIEW_HEIGHT));
-        teamView.setTitle(team.getTeamName());
-        teamView.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
-        // ^ prevent user from doing something else
-        teamView.setLocationRelativeTo(null);
-        teamView.setLayout(new BorderLayout());
-
-        showContent(teamView, team);
-        addTeamOptions(teamView, team);
-
-        teamView.setVisible(false);
-        teamView.setVisible(true);
-    }
-
-    // MODIFIES: teamView
-    // EFFECTS: adds option buttons for teamView dialog
-    private void addTeamOptions(JDialog dialog, Team team) {
-        JPanel teamOptions = new JPanel();
-        initializeAddButton(dialog, teamOptions, team);
-        initializeRemButton(dialog, teamOptions, team);
-        initializeFavButton(dialog, teamOptions, team);
-
-        dialog.add(teamOptions, BorderLayout.PAGE_END);
-
-    }
-
-    // MODIFIES: teamView
-    // EFFECTS: adds Add Hero button for teamView dialog
-    private void initializeAddButton(JDialog dialog, JPanel panel, Team team) {
-        JButton buttonAdd = new JButton("Add Hero");
-        buttonAdd.addActionListener(new ActionListener() {
+    // MODIFIES: toolbar
+    // EFFECTS: sets team panel view so that:
+    //          if all teams are shown, show favourite teams only
+    //          if only favourite teams are shown, show all teams
+    public void initializeShowFavButton(JToolBar tb) {
+        JButton buttonShowFav = new JButton("Toggle Favourites");
+        buttonShowFav.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane newHeroPrompt = new JOptionPane();
-                Object[] possibleHeroTypeNames = {"HIGHWAYMAN", "CRUSADER", "PLAGUEDOCTOR", "VESTAL"};
-                String heroGivenName = (String)newHeroPrompt.showInputDialog(
-                        dialog, "Please enter a name for your new hero: ", "Add New Hero",
-                        newHeroPrompt.PLAIN_MESSAGE);
-
-                String heroTypeName = (String)newHeroPrompt.showInputDialog(
-                        dialog, "Please select the type of the new hero: ", "Add New Hero",
-                        newHeroPrompt.PLAIN_MESSAGE,
-                        null, possibleHeroTypeNames, "HIGHWAYMAN");
-
-                // runs if string is valid
-                if ((heroGivenName != null) && (heroGivenName.length() > 0)) {
-                    team.addHeroToTeam(new Hero(heroGivenName, getHeroType(heroTypeName)));
-                    showContent(dialog, team);
-                    dialog.revalidate();
-                } else {
-                    // runs if string was null
-                    showFailMessage("Invalid hero name!", dialog);
-                }
+                showFavouriteTeams(e);
             }
         });
-        panel.add(buttonAdd);
-    }
-
-    // EFFECTS: returns hero type based on given hero type name
-    // TODO: throw exception?
-    private HeroType getHeroType(String typeName) {
-        for (HeroType ht : availableHeroTypes) {
-            if (typeName.equals(ht.getHeroTypeName())) {
-                return ht;
-            }
-        }
-        return availableHeroTypes.get(0);
-    }
-
-    // MODIFIES: teamView
-    // EFFECTS: adds Remove Hero button for teamView dialog
-    private void initializeRemButton(JDialog dialog, JPanel panel, Team team) {
-        JButton buttonRem = new JButton("Remove Hero");
-        buttonRem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane remHeroPrompt = new JOptionPane();
-                String heroGivenName = (String)remHeroPrompt.showInputDialog(
-                        dialog, "Please enter the name of the hero you would like to remove: ",
-                        "Remove a Hero",
-                        remHeroPrompt.PLAIN_MESSAGE);
-
-                // runs if string is valid
-                if ((heroGivenName != null) && (heroGivenName.length() > 0)) {
-                    removeHeroOption(heroGivenName, team, dialog);
-                } else {
-                    // runs if string was null
-                    showFailMessage("Invalid hero name!", dialog);
-                }
-            }
-        });
-        panel.add(buttonRem);
-    }
-
-    // EFFECTS: removes a hero from the team
-    private void removeHeroOption(String heroGivenName, Team team, JDialog dialog) {
-        int count = 0;
-        for (Hero h : team.getTeamMembers()) {
-            if (heroGivenName.equals(h.getHeroGivenName())) {
-                team.removeHeroFromTeam(h);
-                break;
-            }
-            count++;
-        }
-        if (count == team.getTeamMembers().size()) {
-            showFailMessage("No hero with that name!", dialog);
-        }
-        showContent(dialog, team);
-        dialog.revalidate();
-    }
-
-    // MODIFIES: teamView
-    // EFFECTS: adds Favourite button for teamView dialog
-    private void initializeFavButton(JDialog dialog, JPanel panel, Team team) {
-        JButton buttonFav = new JButton("Favourite");
-        buttonFav.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                team.changeFavourite();
-                showContent(dialog, team);
-                dialog.revalidate();
-            }
-        });
-        panel.add(buttonFav);
-    }
-
-    // MODIFIES: this
-    // EFFECTS: displays members and favourite status of current team in teamview dialog
-    private void showContent(JDialog dialog, Team team) {
-        JPanel teamContent = new JPanel();
-        teamContent.setLayout(new BoxLayout(teamContent, BoxLayout.PAGE_AXIS));
-        for (Hero h : team.getTeamMembers()) {
-            String heroTypeName = h.getHeroType().getHeroTypeName();
-            JLabel heroLabel = new JLabel("Name: " + h.getHeroGivenName()
-                    + ", Type: " + heroTypeName);
-            JLabel heroIcon = new JLabel(getHeroIcon(heroTypeName));
-            teamContent.add(heroIcon);
-            teamContent.add(heroLabel);
-        }
-        JLabel favLabel = new JLabel("Favourite?: " + team.isFavourite());
-        teamContent.add(favLabel);
-        dialog.add(teamContent);
-    }
-
-    // EFFECTS: returns the icon for the given hero type name
-    private ImageIcon getHeroIcon(String heroTypeName) {
-        if (heroTypeName.equals(availableHeroTypes.get(0).getHeroTypeName())) {
-            return iconHighwayman;
-        } else if (heroTypeName.equals(availableHeroTypes.get(1).getHeroTypeName())) {
-            return iconCrusader;
-        } else if (heroTypeName.equals(availableHeroTypes.get(2).getHeroTypeName())) {
-            return iconPlagueDoctor;
-        } else if (heroTypeName.equals(availableHeroTypes.get(3).getHeroTypeName())) {
-            return iconVestal;
-        } else {
-            return new ImageIcon("./data/tobs.jpg");
-        }
+        tb.add(buttonShowFav);
     }
 
     // MODIFIES: this
@@ -357,13 +163,12 @@ public class TeamMakerAppGUI {
         // runs if string is valid
         if ((s != null) && (s.length() > 0)) {
             savedTeams.addTeam(new Team(s));
-            addTeamButtons(teamPanel);
+            teamPanel.addTeamButtons();
             teamPanel.revalidate();
         } else {
             // runs if string was null
-            showFailMessage("Invalid team name!", teamPanel);
+            teamPanel.showMessage("Invalid team name!", frame, false);
         }
-
 
     }
 
@@ -384,7 +189,7 @@ public class TeamMakerAppGUI {
             removeTeamOption(s);
         } else {
             // runs if string was null
-            showFailMessage("Invalid team name!", frame);
+            teamPanel.showMessage("Invalid team name!", frame, false);
         }
 
         teamNamePrompt.setVisible(true);
@@ -399,24 +204,15 @@ public class TeamMakerAppGUI {
         for (Team team : savedTeams.getSavedTeams()) {
             if (s.equals(team.getTeamName())) {
                 savedTeams.removeTeam(team);
-                addTeamButtons(teamPanel);
+                teamPanel.addTeamButtons();
                 teamPanel.revalidate();
                 success = true;
                 break;
             }
         }
         if (!success) {
-            showFailMessage("Couldn't find a team with name: " + s, frame);
+            teamPanel.showMessage("Couldn't find a team with name: " + s, frame, false);
         }
-    }
-
-    private void showFailMessage(String msg, Component overlay) {
-        JOptionPane failMessage = new JOptionPane();
-        failMessage.showMessageDialog(
-                overlay,
-                msg,
-                "Warning",
-                JOptionPane.PLAIN_MESSAGE);
     }
 
     // MODIFIES: this
@@ -424,10 +220,11 @@ public class TeamMakerAppGUI {
     private void loadTeams(ActionEvent e) {
         try {
             savedTeams = jsonReader.read();
-            System.out.println("Loaded all teams from " + JSON_STORE);
-            addTeamButtons(teamPanel);
+            teamPanel.setSavedTeams(savedTeams);
+            teamPanel.addTeamButtons();
+            teamPanel.showMessage("Loaded all teams from " + JSON_STORE, frame, true);
         } catch (IOException exc) {
-            System.out.println("Unable to read from file: " + JSON_STORE);
+            teamPanel.showMessage("Unable to read from file: " + JSON_STORE, frame, false);
         }
     }
 
@@ -438,14 +235,31 @@ public class TeamMakerAppGUI {
             jsonWriter.open();
             jsonWriter.write(savedTeams);
             jsonWriter.close();
-            System.out.println("Saved all teams to " + JSON_STORE);
+            teamPanel.showMessage("Saved all teams to " + JSON_STORE, frame, true);
         } catch (FileNotFoundException exc) {
-            System.out.println("Unable to write to file: " + JSON_STORE);
+            teamPanel.showMessage("Unable to write to file: " + JSON_STORE, frame, false);
         }
     }
 
-}
+    // MODIFIES: this
+    // EFFECTS: toggles between showing all teams and favourites only
+    private void showFavouriteTeams(ActionEvent e) {
+        teamPanel.removeAll();
+        if (!teamPanel.displayFavourites) {
+            for (Team team : savedTeams.getSavedTeams()) {
+                if (team.isFavourite()) {
+                    teamPanel.addTeamButton(team);
+                }
+            }
+            teamPanel.displayFavourites = true;
+        } else {
+            teamPanel.addTeamButtons();
+            teamPanel.displayFavourites = false;
+        }
+        teamPanel.setVisible(false);
+        teamPanel.setVisible(true);
+    }
 
-// TODO: clean this code up ,,, it's a mess
+}
 
 
