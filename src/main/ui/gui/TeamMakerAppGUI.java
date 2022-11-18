@@ -174,7 +174,6 @@ public class TeamMakerAppGUI {
 
     // MODIFIES: this
     // EFFECTS: removes team button matching user input
-    // TODO: bidirectional relationship between teams and their buttons?
     private void removeTeam(ActionEvent e) {
         JOptionPane teamNamePrompt = new JOptionPane();
 
@@ -198,6 +197,7 @@ public class TeamMakerAppGUI {
         teamPanel.setVisible(true);
     }
 
+    // MODIFIES: this
     // EFFECTS: removes a team with given name
     private void removeTeamOption(String s) {
         boolean success = false;
