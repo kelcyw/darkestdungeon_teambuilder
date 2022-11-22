@@ -40,3 +40,15 @@ but for players who are newer to the game as well!
 - as a user, I want to be able to see which stats the team is strong in
 - as a user, I want to be able to save all of my saved teams to a file
 - as a user, I want to be able to reload that file and resume editing the saved teams list
+
+
+# Instructions for Grader
+
+- You can generate the first required event related to adding Xs to a Y by clicking on the "New Team" button,
+    and entering a team name. 
+- You can generate the second required event related to adding Xs to a Y by clicking on the "Delete Team" button,
+    and entering the name of the team you would like to delete.
+- You can locate my visual component by clicking on a team button, clicking on "Add Hero", and entering a valid name and 
+    hero type. The hero's icon should appear. 
+- You can save the state of my application by clicking on the "Save Teams" button.
+- You can reload the state of my application by clicking on the "Load Teams" button. 
