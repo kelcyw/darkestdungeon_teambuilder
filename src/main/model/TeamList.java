@@ -18,15 +18,17 @@ public class TeamList implements Writable {
     }
 
     // MODIFIES: this
-    // EFFECTS: adds given team to the list of saved teams
+    // EFFECTS: adds given team to the list of saved teams, logs add event in eventlog
     public void addTeam(Team newTeam) {
         savedTeams.add(newTeam);
+        EventLog.getInstance().logEvent(new Event("The team " + newTeam.getTeamName() + " added!"));
     }
 
     // MODIFIES: this
     // EFFECTS: removes given team from the list of saved teams
     public void removeTeam(Team currentTeam) {
         savedTeams.remove(currentTeam);
+        EventLog.getInstance().logEvent(new Event("The team " + currentTeam.getTeamName() + " was removed!"));
     }
 
     // REQUIRES: given index must exist within current teams list

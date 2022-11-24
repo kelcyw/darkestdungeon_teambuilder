@@ -1,5 +1,7 @@
 package ui.gui;
 
+import model.Event;
+import model.EventLog;
 import model.Team;
 import model.TeamList;
 import persistence.JsonReader;
@@ -9,6 +11,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -52,7 +56,7 @@ public class TeamMakerAppGUI {
         frame = new JFrame();
         frame.setLayout(new BorderLayout());
         frame.setMinimumSize(new Dimension(WIDTH, HEIGHT));
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
@@ -69,6 +73,21 @@ public class TeamMakerAppGUI {
 
         frame.getContentPane().add(mainPanel);
         mainPanel.setVisible(true);
+
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent windowEvent) {
+                printLog();
+                System.exit(0);
+            }
+        });
+    }
+
+    // EFFECTS: prints out event descriptions for each event in EventLog
+    public void printLog() {
+        for (Event e : EventLog.getInstance()) {
+            System.out.println(e.getDescription());
+        }
     }
 
     // MODIFIES: this
