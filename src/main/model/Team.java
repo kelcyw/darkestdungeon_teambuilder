@@ -60,6 +60,8 @@ public class Team implements Writable {
     // EFFECTS: adds the given Hero to the team at index 0
     public void addHeroToTeam(Hero newHero) {
         teamMembers.add(newHero);
+        EventLog.getInstance().logEvent(new Event("A " + newHero.getHeroType().getHeroTypeName()
+                + " named " + newHero.getHeroGivenName() + " was added to " + teamName + "!"));
     }
 
     // REQUIRES: index must be between 0 and 3
@@ -67,6 +69,8 @@ public class Team implements Writable {
     // EFFECTS: removes the given Hero from the team
     public void removeHeroFromTeam(Hero currentHero) {
         teamMembers.remove(currentHero);
+        EventLog.getInstance().logEvent(new Event("The " + currentHero.getHeroType().getHeroTypeName()
+                + " named " + currentHero.getHeroGivenName() + " was removed from " + teamName + "!"));
     }
 
     // EFFECTS: combines all heroes' selected skills into one list

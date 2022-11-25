@@ -52,3 +52,12 @@ but for players who are newer to the game as well!
     hero type. The hero's icon should appear. 
 - You can save the state of my application by clicking on the "Save Teams" button.
 - You can reload the state of my application by clicking on the "Load Teams" button. 
+
+# Phase 4: Task 2
+
+A team named Team 1 was added!
+A team named Team 2 was added!
+A HIGHWAYMAN named Dismas was added to Team 1!
+A CRUSADER named Reynauld was added to Team 1!
+The CRUSADER named Reynauld was removed from Team 1!
+The team named Team 2 was removed!
