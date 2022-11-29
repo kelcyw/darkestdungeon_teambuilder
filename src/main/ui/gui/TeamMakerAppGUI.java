@@ -15,6 +15,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Iterator;
 
 // The main application class that contains information for the main menu (GUI version)
 // JSON-related code is modelled after JsonSerializationDemo
@@ -88,6 +89,11 @@ public class TeamMakerAppGUI {
         for (Event e : EventLog.getInstance()) {
             System.out.println(e.getDescription());
         }
+//        Iterator<Event> iter = EventLog.getInstance().iterator();
+//        while (iter.hasNext()) {
+//            Event e = iter.next();
+//            System.out.println(e.getDescription());
+//        }
     }
 
     // MODIFIES: this
@@ -264,16 +270,16 @@ public class TeamMakerAppGUI {
     // EFFECTS: toggles between showing all teams and favourites only
     private void showFavouriteTeams(ActionEvent e) {
         teamPanel.removeAll();
-        if (!teamPanel.displayFavourites) {
+        if (!teamPanel.isDisplayingFavourites()) {
             for (Team team : savedTeams.getSavedTeams()) {
                 if (team.isFavourite()) {
                     teamPanel.addTeamButton(team);
                 }
             }
-            teamPanel.displayFavourites = true;
+            teamPanel.changeDisplayingFavourites(true);
         } else {
             teamPanel.addTeamButtons();
-            teamPanel.displayFavourites = false;
+            teamPanel.changeDisplayingFavourites(false);
         }
         teamPanel.setVisible(false);
         teamPanel.setVisible(true);

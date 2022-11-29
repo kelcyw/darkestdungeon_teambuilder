@@ -9,9 +9,9 @@ import java.util.Scanner;
 // HeroMenu contains information and functionality for the hero edit menu
 
 public class HeroMenu {
-    Scanner input;
-    Team team;
-    Hero hero;
+    private Scanner input;
+    private Team team;
+    private Hero hero;
 
     // EFFECTS: runs the hero editor menu
     public HeroMenu(Team team, Hero hero) {

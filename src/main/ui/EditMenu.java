@@ -11,8 +11,8 @@ import java.util.Scanner;
 // EditMenu contains information and functionality for the edit menu
 
 public class EditMenu {
-    Scanner input;
-    String teamName;
+    private Scanner input;
+    private String teamName;
 
     // EFFECTS: runs the edit menu
     public EditMenu(String teamName, TeamList savedTeams, List<HeroType> availableHeroTypes) {

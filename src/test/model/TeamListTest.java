@@ -21,6 +21,7 @@ public class TeamListTest {
         testTeamList = new TeamList();
         testTeamList.addTeam(testTeam1);
         testTeamList.addTeam(testTeam2);
+        EventLog.getInstance().clear();
     }
 
     @Test
@@ -68,6 +69,84 @@ public class TeamListTest {
         assertTrue(favouriteTeams.contains(testTeam1));
         assertTrue(favouriteTeams.contains(testTeam2));
         assertEquals(2, favouriteTeams.size());
+    }
+
+    @Test
+    public void testLogEventOnceAdd() {
+        testTeamList = new TeamList();
+        testTeamList.addTeam(testTeam1);
+        List<String> eventDescriptions = new ArrayList<>();
+        eventDescriptions.add("Event log cleared.");
+        eventDescriptions.add("A team named " + testTeam1.getTeamName() + " was added!");
+        int counter = 0;
+        for (Event e : EventLog.getInstance()) {
+            assertEquals(eventDescriptions.get(counter), e.getDescription());
+            counter++;
+        }
+    }
+
+    @Test
+    public void testLogEventMultipleAdd() {
+        testTeamList = new TeamList();
+        testTeamList.addTeam(testTeam1);
+        testTeamList.addTeam(testTeam1);
+        testTeamList.addTeam(testTeam2);
+        List<String> eventDescriptions = new ArrayList<>();
+        eventDescriptions.add("Event log cleared.");
+        eventDescriptions.add("A team named " + testTeam1.getTeamName() + " was added!");
+        eventDescriptions.add("A team named " + testTeam1.getTeamName() + " was added!");
+        eventDescriptions.add("A team named " + testTeam2.getTeamName() + " was added!");
+        int counter = 0;
+        for (Event e : EventLog.getInstance()) {
+            assertEquals(eventDescriptions.get(counter), e.getDescription());
+            counter++;
+        }
+    }
+
+    @Test
+    public void testLogEventOnceRemove() {
+        testTeamList.removeTeam(testTeam1);
+        List<String> eventDescriptions = new ArrayList<>();
+        eventDescriptions.add("Event log cleared.");
+        eventDescriptions.add("The team named " + testTeam1.getTeamName() + " was removed!");
+        int counter = 0;
+        for (Event e : EventLog.getInstance()) {
+            assertEquals(eventDescriptions.get(counter), e.getDescription());
+            counter++;
+        }
+    }
+
+    @Test
+    public void testLogEventMultipleRemove() {
+        testTeamList.removeTeam(testTeam1);
+        testTeamList.removeTeam(testTeam2);
+        List<String> eventDescriptions = new ArrayList<>();
+        eventDescriptions.add("Event log cleared.");
+        eventDescriptions.add("The team named " + testTeam1.getTeamName() + " was removed!");
+        eventDescriptions.add("The team named " + testTeam2.getTeamName() + " was removed!");
+        int counter = 0;
+        for (Event e : EventLog.getInstance()) {
+            assertEquals(eventDescriptions.get(counter), e.getDescription());
+            counter++;
+        }
+    }
+
+    @Test
+    public void testLogEventMultipleMixed() {
+        testTeamList = new TeamList();
+        testTeamList.addTeam(testTeam1);
+        testTeamList.removeTeam(testTeam1);
+        testTeamList.addTeam(testTeam2);
+        List<String> eventDescriptions = new ArrayList<>();
+        eventDescriptions.add("Event log cleared.");
+        eventDescriptions.add("A team named " + testTeam1.getTeamName() + " was added!");
+        eventDescriptions.add("The team named " + testTeam1.getTeamName() + " was removed!");
+        eventDescriptions.add("A team named " + testTeam2.getTeamName() + " was added!");
+        int counter = 0;
+        for (Event e : EventLog.getInstance()) {
+            assertEquals(eventDescriptions.get(counter), e.getDescription());
+            counter++;
+        }
     }
 
 }

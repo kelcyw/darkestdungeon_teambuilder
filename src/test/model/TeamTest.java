@@ -27,6 +27,7 @@ public class TeamTest {
         testHeroType = new HeroType("Test Hero Type", testSkillset);
         testHero = new Hero("Boudica", testHeroType);
         testHero2 = new Hero("Barristan", testHeroType);
+        EventLog.getInstance().clear();
     }
 
     @Test
@@ -85,6 +86,110 @@ public class TeamTest {
         testSkill.addSkillStat(testStat);
         testSkill.changeSelectedStatus();
         assertEquals(" none", testTeam.determineStrengths());
+    }
+
+    @Test
+    public void testLogEventOnceAdd() {
+        testTeam.addHeroToTeam(testHero);
+        List<String> eventDescriptions = new ArrayList<>();
+        eventDescriptions.add("Event log cleared.");
+        eventDescriptions.add("A " + testHero.getHeroType().getHeroTypeName() + " named " + testHero.getHeroGivenName()
+            + " was added to " + testTeam.getTeamName() + "!");
+        int counter = 0;
+        for (Event e : EventLog.getInstance()) {
+            assertEquals(eventDescriptions.get(counter), e.getDescription());
+            counter++;
+        }
+    }
+
+    @Test
+    public void testLogEventMultipleAdd() {
+        testTeam.addHeroToTeam(testHero);
+        testTeam.addHeroToTeam(testHero);
+        testTeam.addHeroToTeam(testHero2);
+        List<String> eventDescriptions = new ArrayList<>();
+        eventDescriptions.add("Event log cleared.");
+        eventDescriptions.add("A " + testHero.getHeroType().getHeroTypeName() + " named "
+                + testHero.getHeroGivenName()
+                + " was added to " + testTeam.getTeamName() + "!");
+        eventDescriptions.add("A " + testHero.getHeroType().getHeroTypeName() + " named "
+                + testHero.getHeroGivenName()
+                + " was added to " + testTeam.getTeamName() + "!");
+        eventDescriptions.add("A " + testHero2.getHeroType().getHeroTypeName() + " named "
+                + testHero2.getHeroGivenName()
+                + " was added to " + testTeam.getTeamName() + "!");
+        int counter = 0;
+        for (Event e : EventLog.getInstance()) {
+            assertEquals(eventDescriptions.get(counter), e.getDescription());
+            counter++;
+        }
+
+    }
+
+    @Test
+    public void testLogEventOnceRemove() {
+        testTeam.addHeroToTeam(testHero);
+        EventLog.getInstance().clear();
+        testTeam.removeHeroFromTeam(testHero);
+        List<String> eventDescriptions = new ArrayList<>();
+        eventDescriptions.add("Event log cleared.");
+        eventDescriptions.add("The " + testHero.getHeroType().getHeroTypeName() + " named " + testHero.getHeroGivenName()
+                + " was removed from " + testTeam.getTeamName() + "!");
+        int counter = 0;
+        for (Event e : EventLog.getInstance()) {
+            assertEquals(eventDescriptions.get(counter), e.getDescription());
+            counter++;
+        }
+    }
+
+    @Test
+    public void testLogEventMultipleRemove() {
+        testTeam.addHeroToTeam(testHero);
+        testTeam.addHeroToTeam(testHero);
+        testTeam.addHeroToTeam(testHero2);
+        EventLog.getInstance().clear();
+        testTeam.removeHeroFromTeam(testHero);
+        testTeam.removeHeroFromTeam(testHero);
+        testTeam.removeHeroFromTeam(testHero2);
+        List<String> eventDescriptions = new ArrayList<>();
+        eventDescriptions.add("Event log cleared.");
+        eventDescriptions.add("The " + testHero.getHeroType().getHeroTypeName() + " named "
+                + testHero.getHeroGivenName()
+                + " was removed from " + testTeam.getTeamName() + "!");
+        eventDescriptions.add("The " + testHero.getHeroType().getHeroTypeName() + " named "
+                + testHero.getHeroGivenName()
+                + " was removed from " + testTeam.getTeamName() + "!");
+        eventDescriptions.add("The " + testHero2.getHeroType().getHeroTypeName() + " named "
+                + testHero2.getHeroGivenName()
+                + " was removed from " + testTeam.getTeamName() + "!");
+        int counter = 0;
+        for (Event e : EventLog.getInstance()) {
+            assertEquals(eventDescriptions.get(counter), e.getDescription());
+            counter++;
+        }
+    }
+
+    @Test
+    public void testLogEventMultipleMixed() {
+        testTeam.addHeroToTeam(testHero);
+        testTeam.addHeroToTeam(testHero2);
+        testTeam.removeHeroFromTeam(testHero);
+        List<String> eventDescriptions = new ArrayList<>();
+        eventDescriptions.add("Event log cleared.");
+        eventDescriptions.add("A " + testHero.getHeroType().getHeroTypeName() + " named "
+                + testHero.getHeroGivenName()
+                + " was added to " + testTeam.getTeamName() + "!");
+        eventDescriptions.add("A " + testHero2.getHeroType().getHeroTypeName() + " named "
+                + testHero2.getHeroGivenName()
+                + " was added to " + testTeam.getTeamName() + "!");
+        eventDescriptions.add("The " + testHero.getHeroType().getHeroTypeName() + " named "
+                + testHero.getHeroGivenName()
+                + " was removed from " + testTeam.getTeamName() + "!");
+        int counter = 0;
+        for (Event e : EventLog.getInstance()) {
+            assertEquals(eventDescriptions.get(counter), e.getDescription());
+            counter++;
+        }
     }
 
 

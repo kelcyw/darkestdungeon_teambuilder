@@ -56,6 +56,7 @@ public class Team implements Writable {
         teamName = newName;
     }
 
+    // REQUIRES: number of heroes on team is between 0 and 3
     // MODIFIES: this
     // EFFECTS: adds the given Hero to the team at index 0
     public void addHeroToTeam(Hero newHero) {
@@ -64,7 +65,7 @@ public class Team implements Writable {
                 + " named " + newHero.getHeroGivenName() + " was added to " + teamName + "!"));
     }
 
-    // REQUIRES: index must be between 0 and 3
+    // REQUIRES: number of heroes on team is between 1 and 4
     // MODIFIES: this
     // EFFECTS: removes the given Hero from the team
     public void removeHeroFromTeam(Hero currentHero) {

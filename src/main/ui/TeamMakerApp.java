@@ -21,11 +21,6 @@ public class TeamMakerApp {
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
-    private HeroType highwayman;
-    private HeroType crusader;
-    private HeroType plaguedoctor;
-    private HeroType vestal;
-
     // EFFECTS: runs team maker application
     public TeamMakerApp() {
         jsonWriter = new JsonWriter(JSON_STORE);

@@ -15,9 +15,9 @@ import java.util.List;
 
 public class TeamPanel extends JPanel {
 
-    TeamList savedTeams;
-    List<HeroType> availableHeroTypes;
-    boolean displayFavourites;
+    private TeamList savedTeams;
+    private List<HeroType> availableHeroTypes;
+    private boolean displayFavourites;
 
     private ImageIcon iconHighwayman = new ImageIcon("./data/images/icon_highwayman.png");
     private ImageIcon iconCrusader = new ImageIcon("./data/images/icon_crusader.png");
@@ -256,6 +256,17 @@ public class TeamPanel extends JPanel {
         } else {
             return new ImageIcon("./data/tobs.jpg");
         }
+    }
+
+    // EFFECTS: returns the favourites display status of TeamPanel
+    public boolean isDisplayingFavourites() {
+        return displayFavourites;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: changes favourites display status of TeamPanel
+    public void changeDisplayingFavourites(boolean status) {
+        displayFavourites = status;
     }
 
 }

@@ -42,7 +42,7 @@ but for players who are newer to the game as well!
 - as a user, I want to be able to reload that file and resume editing the saved teams list
 
 
-# Instructions for Grader
+## Instructions for Grader
 
 - You can generate the first required event related to adding Xs to a Y by clicking on the "New Team" button,
     and entering a team name. 
@@ -53,7 +53,7 @@ but for players who are newer to the game as well!
 - You can save the state of my application by clicking on the "Save Teams" button.
 - You can reload the state of my application by clicking on the "Load Teams" button. 
 
-# Phase 4: Task 2
+## Phase 4: Task 2
 
 A team named Team 1 was added!
 A team named Team 2 was added!
@@ -61,3 +61,9 @@ A HIGHWAYMAN named Dismas was added to Team 1!
 A CRUSADER named Reynauld was added to Team 1!
 The CRUSADER named Reynauld was removed from Team 1!
 The team named Team 2 was removed!
+
+## Phase 4: Task 3
+- Pull code related to the toolbar in "TeamMakerAppGUI" into a new class (maybe named "Toolbar") to
+  make the project's structure easier to understand
+- Have any methods with a REQUIRES clause throw an exception, ex. addHeroToTeam in the Team class should
+  throw an exception like "TeamSizeException"
