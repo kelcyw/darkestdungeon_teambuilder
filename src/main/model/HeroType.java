@@ -69,7 +69,7 @@ public class HeroType implements Writable {
         return json;
     }
 
-    // TODO: add specification
+    // EFFECTS: returns skills for this HeroType as a JSONArray
     public JSONArray skillsToJson() {
         JSONArray jsonArray = new JSONArray();
 

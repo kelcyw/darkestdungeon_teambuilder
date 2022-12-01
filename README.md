@@ -64,6 +64,10 @@ The team named Team 2 was removed!
 
 ## Phase 4: Task 3
 - Pull code related to the toolbar in "TeamMakerAppGUI" into a new class (maybe named "Toolbar") to
-  make the project's structure easier to understand
-- Have any methods with a REQUIRES clause throw an exception, ex. addHeroToTeam in the Team class should
-  throw an exception like "TeamSizeException"
+  make the project's structure easier to understand and to increase cohesion
+- Have any methods with a REQUIRES clause throw an exception, (ex. addHeroToTeam in the Team class should
+  throw an exception like "TeamSizeException") to increase code robustness
+  - This should be done for the following methods: getTeam (TeamList), addHeroToTeam (Team), 
+    removeHeroFromTeam (Team), increaseHeroLevel (Hero), decreaseHeroLevel (Hero), setHeroLevel (Hero), 
+    addHeroSkill (HeroType), removeHeroSkill (HeroType), addSkillStat (Skill), decreaseStatChance (Stat)
+- refactor functions?
