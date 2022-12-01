@@ -70,4 +70,3 @@ The team named Team 2 was removed!
   - This should be done for the following methods: getTeam (TeamList), addHeroToTeam (Team), 
     removeHeroFromTeam (Team), increaseHeroLevel (Hero), decreaseHeroLevel (Hero), setHeroLevel (Hero), 
     addHeroSkill (HeroType), removeHeroSkill (HeroType), addSkillStat (Skill), decreaseStatChance (Stat)
-- refactor functions?
