@@ -70,3 +70,7 @@ The team named Team 2 was removed!
   - This should be done for the following methods: getTeam (TeamList), addHeroToTeam (Team), 
     removeHeroFromTeam (Team), increaseHeroLevel (Hero), decreaseHeroLevel (Hero), setHeroLevel (Hero), 
     addHeroSkill (HeroType), removeHeroSkill (HeroType), addSkillStat (Skill), decreaseStatChance (Stat)
+- Some methods share a lot of similarity in their code bodies
+  - Some examples are methods like teamsToJson, membersToJson, skillsToJson, statsToJson
+  - These methods could be refactored to take a list of objects, then applying the put(object.toJson())
+    on each one.
